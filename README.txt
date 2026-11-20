@@ -1,0 +1,1 @@
+EVE App mit hochgeladenem Tattoo Kollektiv Logo. ZIP entpacken und gesamten Ordner auf Netlify Drop hochladen. App-Daten sind weiterhin nur Testdaten; nicht produktiv verwenden. Bei bestehender Installation die Web-App neu laden und gegebenenfalls vom Home-Bildschirm entfernen und erneut hinzufügen.

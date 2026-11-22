@@ -2,9 +2,9 @@
 :root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#111;color:#f3f3f3}*{box-sizing:border-box}body{margin:0}main{max-width:940px;margin:auto;padding:22px}header{display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #555;padding:8px 0 20px}header img{width:108px;height:108px;object-fit:contain}h1{font-size:clamp(26px,5vw,43px);margin:6px 0}h2{font-size:24px;margin:0 0 14px}h3{font-size:17px;margin:22px 0 8px}.eyebrow{font-size:12px;letter-spacing:.15em;color:#bdbdbd;font-weight:800}.muted{color:#b7b7b7;font-size:14px;line-height:1.5}.card{background:#202020;border:1px solid #444;border-radius:14px;padding:22px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px}label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}input:not([type=radio]):not([type=checkbox]),textarea,select{width:100%;padding:13px;border-radius:8px;border:1px solid #6a6a6a;background:#121212;color:#fff;font:inherit;font-size:16px}textarea{min-height:84px}input[type=checkbox],input[type=radio]{accent-color:#f5f5f5;width:19px;height:19px;vertical-align:middle}.question{border:0;border-bottom:1px solid #454545;padding:15px 0;margin:0}.question legend{font-weight:650;line-height:1.5;padding-top:10px}.choices{display:flex;flex-wrap:wrap;gap:16px}.choices label{font-weight:450;white-space:nowrap}.detail{margin-top:5px}.tick{display:flex;align-items:flex-start;gap:12px;line-height:1.55;font-weight:500}.tick input{flex-shrink:0;margin-top:2px}.step{display:none}.step.active{display:block}.progress{background:#424242;border-radius:12px;height:6px;margin:20px 0 8px;overflow:hidden}.progress>div{height:100%;background:#fff;transition:width .2s}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0}button{border:0;border-radius:9px;padding:14px 20px;background:#f4f4f4;color:#111;font-weight:750;font-size:16px;cursor:pointer}.secondary{background:#333;color:#fff;border:1px solid #777}.error{color:#ffb5b5;font-weight:700;min-height:24px}.signature{background:#fff;border-radius:8px;overflow:hidden}canvas{display:block;width:100%;height:190px;touch-action:none}.sign-note{color:#333;padding:0 12px 10px;font-size:12px}ol li{line-height:1.6;margin-bottom:10px}#printable{display:none}.notice{border-left:3px solid #999;padding-left:12px}.small{font-size:12px} @media(max-width:650px){main{padding:14px}.card{padding:16px}.grid{grid-template-columns:1fr}header img{width:76px;height:76px}.choices{gap:8px 16px}}@media print{:root{color-scheme:light}body{background:white;color:#111}main{display:none}#printable{display:block!important;color:#111;font:10pt Arial,sans-serif}#printable h1{font-size:19pt}#printable h2{font-size:12pt;border-bottom:1px solid #777;margin-top:17px}#printable p{margin:5px 0;line-height:1.4}#printable .line{padding:4px 0;border-bottom:1px solid #ddd;overflow-wrap:anywhere}#printable img.logo{width:65px;float:right}#printable img.sig{width:270px;max-height:110px;object-fit:contain;object-position:left}#printable .pagebreak{break-before:page}#printable .notice{font-size:9pt;border:1px solid #999;padding:8px}#printable ol li{margin-bottom:4px}@page{size:A4;margin:13mm}}</style><style id="staff-auth-style">
 #staffAuth{max-width:940px;margin:20px auto;padding:0 22px}#staffAuth .auth-card{background:#202020;border:1px solid #555;border-radius:14px;padding:22px}#staffAuth .auth-row{display:flex;gap:10px;flex-wrap:wrap}#staffAuth .auth-row button{flex:1}#staffAuth .auth-msg{min-height:1.4em;color:#ddd}#staffAuth [hidden]{display:none!important}#staffAuth input{margin-bottom:10px}body.recovery-mode main{display:none}body.recovery-mode #staffAuth{margin-top:8vh}body.recovery-mode #authLogin{display:none}body.recovery-mode #authRecovery{display:block!important}
 </style></head><body><section id="staffAuth" aria-label="Mitarbeiteranmeldung"><div class="auth-card">
-<div class="eyebrow">BLUTHANDWERK · MITARBEITERBEREICH</div><h2>Studio-Login (Testversion)</h2>
+<div class="eyebrow">BLUTHANDWERK · MITARBEITERBEREICH</div><h2>Studio-Login (Testversion · Passwortfunktion)</h2>
 <p class="muted">Die Mitarbeiteranmeldung wird mit Supabase verbunden. Das EVE-Formular darunter ist weiterhin nur ein Prototyp und speichert keine Daten online.</p>
-<div id="authLogin"><label for="authEmail">E-Mail</label><input id="authEmail" type="email" autocomplete="username" placeholder="name@studio.de"><label for="authPassword">Passwort</label><input id="authPassword" type="password" autocomplete="current-password"><div class="auth-row"><button type="button" id="authSignIn">Anmelden</button><button type="button" class="secondary" id="authResetRequest">Passwort-Link anfordern</button><button type="button" class="secondary" id="authSignOut" hidden>Abmelden</button></div></div>
+<div id="authLogin"><label for="authEmail">E-Mail</label><input id="authEmail" type="email" autocomplete="username" placeholder="name@studio.de"><label for="authPassword">Passwort</label><input id="authPassword" type="password" autocomplete="current-password"><div class="auth-row"><button type="button" id="authSignIn">Anmelden</button><button type="button" class="secondary" id="authResetRequest">Passwort-Link anfordern</button><button type="button" class="secondary" id="authSetPassword" hidden>Passwort festlegen / ändern</button><button type="button" class="secondary" id="authSignOut" hidden>Abmelden</button></div></div>
 <div id="authRecovery" hidden><h3>Neues Passwort festlegen</h3><p class="muted">Mindestens 12 Zeichen verwenden. Das Passwort wird nur an Supabase übermittelt.</p><label for="authNewPassword">Neues Passwort</label><input id="authNewPassword" type="password" autocomplete="new-password" minlength="12"><label for="authNewPassword2">Passwort wiederholen</label><input id="authNewPassword2" type="password" autocomplete="new-password" minlength="12"><button type="button" id="authSavePassword">Passwort speichern</button></div>
 <p id="authMessage" class="auth-msg" role="status" aria-live="polite"></p></div></section><main><header><div><div class="eyebrow">BLUTHANDWERK TÄTOWIERUNGEN</div><h1>Einverständnis­erklärung</h1><div class="muted">Tattoo Kollektiv · Digitale EVE · Entwurf 2.0</div></div><img src="studio-logo.jpg" alt="Original-Logo Tattoo Kollektiv"></header><div class="progress"><div id="bar" style="width:16.67%"></div></div><p class="muted" id="counter">Schritt 1 von 6</p><form id="form" novalidate>
 <section class="step active"><h2>01 · Persönliche Angaben</h2><div class="card"><div class="grid"><div><label for="first">Vorname *</label><input id="first" required autocomplete="given-name"></div><div><label for="last">Nachname *</label><input id="last" required autocomplete="family-name"></div><div><label for="birth">Geburtsdatum *</label><input id="birth" type="date" required></div><div><label for="birthplace">Geburtsort</label><input id="birthplace"></div><div><label for="street">Straße *</label><input id="street" required></div><div><label for="house">Hausnummer *</label><input id="house" required></div><div><label for="zip">PLZ *</label><input id="zip" required inputmode="numeric"></div><div><label for="city">Wohnort *</label><input id="city" required></div><div><label for="country">Land</label><input id="country" value="Deutschland"></div><div><label for="state">Bundesland</label><input id="state"></div><div><label for="phone">Telefon</label><input id="phone" type="tel"></div><div><label for="email">E-Mail</label><input id="email" type="email"></div></div></div><h2>02 · Tätowierung</h2><div class="card"><div class="grid"><div><label for="date">Datum der Tätowierung *</label><input id="date" type="date" required></div><div><label for="studio">Tattoo-Studio</label><input id="studio" value="Bluthandwerk Tätowierungen"></div><div><label for="artist">Tätowierer/in *</label><input id="artist" required></div><div><label for="placement">Körperstelle *</label><input id="placement" required></div></div><label for="motif">Motiv / Beschreibung *</label><textarea id="motif" required></textarea></div></section>
@@ -46,32 +46,53 @@ const $=id=>document.getElementById(id);const steps=[...document.querySelectorAl
   const msg=(text)=>{el('authMessage').textContent=text};
   const configured=SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('EINTRAGEN') && !SUPABASE_PUBLISHABLE_KEY.includes('EINTRAGEN');
   const url=new URL(location.href);
-  const recoveryHint=url.searchParams.get('type')==='recovery'||new URLSearchParams(location.hash.slice(1)).get('type')==='recovery';
+  const hashParams=new URLSearchParams(location.hash.slice(1));
+  const linkType=url.searchParams.get('type')||hashParams.get('type');
+  const recoveryHint=linkType==='recovery'||linkType==='invite';
   if(recoveryHint)document.body.classList.add('recovery-mode');
-  if(!configured){msg('Noch nicht verbunden: Supabase Project URL und Publishable Key fehlen. Keine echten Kundendaten eingeben.');return}
+  if(!configured){msg('Supabase-Konfiguration fehlt.');return}
   if(!window.supabase?.createClient){msg('Supabase-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen.');return}
   const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}});
+  let recoveryActive=recoveryHint;
+  function showPasswordForm(){
+    recoveryActive=true;
+    document.body.classList.add('recovery-mode');
+    el('authRecovery').hidden=false;
+    msg('Du bist angemeldet. Bitte jetzt dein eigenes neues Passwort festlegen.');
+  }
+  function updateSessionUI(session){
+    el('authSignOut').hidden=!session;
+    el('authSetPassword').hidden=!session;
+  }
   async function checkStaff(session){
     const {data,error}=await client.from('studio_staff').select('display_name,role,active').eq('user_id',session.user.id).maybeSingle();
-    if(error){msg('Anmeldung erfolgreich, aber Mitarbeiterstatus konnte nicht geprüft werden: '+error.message);return}
+    if(error){msg('Angemeldet, aber Mitarbeiterstatus konnte nicht geprüft werden: '+error.message);return}
     if(!data || !data.active){msg('Angemeldet, aber kein aktiver Mitarbeiterzugang. Bitte Studioleitung kontaktieren.');return}
-    msg('Angemeldet als '+data.display_name+' ('+data.role+'). Die Studioverwaltung ist noch in Entwicklung. Keine echten Kundendaten eingeben.');
+    msg('Angemeldet als '+data.display_name+' ('+data.role+'). Über „Passwort festlegen / ändern“ kannst du dein Passwort setzen. Noch keine echten Kundendaten eingeben.');
   }
-  let recoveryActive=recoveryHint;
-  const recovery=()=>{recoveryActive=true;document.body.classList.add('recovery-mode');el('authRecovery').hidden=false;msg('Bitte ein neues Passwort festlegen.')};
   client.auth.onAuthStateChange((event,session)=>{
-    if(event==='PASSWORD_RECOVERY' && session){recovery();return}
+    updateSessionUI(session);
+    if(event==='PASSWORD_RECOVERY' && session){showPasswordForm();return}
     if(recoveryActive)return;
-    el('authSignOut').hidden=!session;
-    if(event==='SIGNED_IN'&&session)checkStaff(session);
     if(event==='SIGNED_OUT')msg('Abgemeldet.');
+    if(event==='SIGNED_IN'&&session)setTimeout(()=>checkStaff(session),0);
   });
   client.auth.getSession().then(({data,error})=>{
     if(error){msg('Anmeldung konnte nicht geprüft werden: '+error.message);return}
-    if(recoveryHint){if(data.session){recovery()}else{msg('Der Passwort-Link ist ungültig oder abgelaufen. Bitte einen neuen Link anfordern.')}return}
-    el('authSignOut').hidden=!data.session;
+    updateSessionUI(data.session);
+    if(recoveryHint){
+      if(data.session)showPasswordForm();
+      else {document.body.classList.remove('recovery-mode');recoveryActive=false;msg('Der Einladungs- oder Passwort-Link ist ungültig oder abgelaufen. Ohne gültige Anmeldung ist keine Passwortvergabe möglich.');}
+      return;
+    }
     if(data.session)checkStaff(data.session);
+    else msg('Bitte anmelden. Falls du einen gültigen Einladungslink geöffnet hast, öffne die App auf demselben Gerät und im selben Browser.');
   });
+  el('authSetPassword').onclick=async()=>{
+    const {data,error}=await client.auth.getUser();
+    if(error||!data.user){msg('Keine gültige Anmeldung vorhanden. Bitte einen gültigen Einladungs- oder Wiederherstellungslink verwenden.');return}
+    showPasswordForm();
+  };
   el('authSignIn').onclick=async()=>{
     msg('Anmeldung wird geprüft …');
     const {error}=await client.auth.signInWithPassword({email:el('authEmail').value.trim(),password:el('authPassword').value});
@@ -87,12 +108,14 @@ const $=id=>document.getElementById(id);const steps=[...document.querySelectorAl
     if(p.length<12){msg('Bitte mindestens 12 Zeichen verwenden.');return}
     if(p!==el('authNewPassword2').value){msg('Die Passwörter stimmen nicht überein.');return}
     msg('Passwort wird gespeichert …');
+    const {data:sessionData}=await client.auth.getSession();
+    if(!sessionData.session){msg('Keine gültige Anmeldung. Passwort wurde nicht geändert.');return}
     const {error}=await client.auth.updateUser({password:p});
     if(error){msg('Passwort konnte nicht gespeichert werden: '+error.message);return}
     recoveryActive=false;el('authNewPassword').value='';el('authNewPassword2').value='';
     document.body.classList.remove('recovery-mode');el('authRecovery').hidden=true;
     history.replaceState(null,'',location.origin+location.pathname);
-    msg('Passwort gespeichert. Die Anmeldung ist bereit; die Studioverwaltung folgt.');
+    msg('Passwort gespeichert. Du kannst dich künftig mit E-Mail und deinem neuen Passwort anmelden.');
   };
   el('authSignOut').onclick=async()=>{const {error}=await client.auth.signOut();if(error)msg(error.message)};
 })();

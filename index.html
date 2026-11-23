@@ -74,6 +74,8 @@ document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));
   const customerArea=el('customerArea'),customerForm=el('customerForm'),customerList=el('customerList');
   let staffUserId=null,customerEditingId=null,customers=[],customerRequest=0;
   let eveSelectedCustomerId=null;
+  // Fehlgeschlagene Uploads innerhalb dieser Sitzung mit derselben Dokument-ID wiederholen.
+  let pendingEveUpload=null;
   const savePdfButton=el('saveEvePdf');
   savePdfButton.addEventListener('click',async()=>{
     if(!staffUserId||!eveSelectedCustomerId){el('error').textContent='Bitte zuerst einen Testkunden über „EVE öffnen“ auswählen.';return}
@@ -88,7 +90,7 @@ document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));
       const {data:{user},error:userError}=await client.auth.getUser();
       if(userError||!user||user.id!==staffUserId)throw new Error('Mitarbeiteranmeldung ist nicht mehr gültig.');
       const customerId=eveSelectedCustomerId;
-      documentId=crypto.randomUUID();
+      documentId=(pendingEveUpload?.customerId===customerId ? pendingEveUpload.documentId : crypto.randomUUID());
       const pdfPath=documentId+'/eve.pdf';
       const printable=el('printable');
       const clone=printable.cloneNode(true);
@@ -106,22 +108,39 @@ document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));
       }finally{clone.remove()}
       if(!(pdf instanceof Blob)||pdf.size<1000)throw new Error('PDF konnte nicht korrekt erstellt werden.');
       if(pdf.size>10*1024*1024)throw new Error('PDF ist größer als das Speicherlimit von 10 MB.');
-      // Die Storage-INSERT-Policy verlangt einen bereits vorhandenen eigenen draft-Eintrag.
+      // Diagnose ohne Aenderung an RLS oder bestehenden Kundendaten.
       savePdfButton.textContent='Dokumenteintrag wird angelegt …';
-      const {error:insertError}=await client.from('eve_documents').insert({id:documentId,customer_id:customerId,artist_id:user.id,created_by:user.id,status:'draft',pdf_path:pdfPath});
-      if(insertError)throw new Error('Dokumenteintrag konnte nicht angelegt werden: '+insertError.message+' (Es wurde keine PDF hochgeladen.)');
+      if(!pendingEveUpload || pendingEveUpload.documentId!==documentId){
+        const {error:insertError}=await client.from('eve_documents').insert({id:documentId,customer_id:customerId,artist_id:user.id,created_by:user.id,status:'draft',pdf_path:pdfPath});
+        if(insertError)throw new Error('Diagnose: Dokumenteintrag ANLEGEN fehlgeschlagen: '+insertError.message);
+        pendingEveUpload={documentId,customerId};
+      }
+      const {data:doc,error:readError}=await client.from('eve_documents').select('id,status,created_by,artist_id,pdf_path').eq('id',documentId).maybeSingle();
+      if(readError || !doc)throw new Error('Diagnose: Dokument angelegt, aber LESEN blockiert: '+(readError?.message||'Kein Datensatz sichtbar')+' | Dokument-ID: '+documentId);
+      const checks=[
+        'Dokument sichtbar: JA',
+        'Status: '+doc.status,
+        'Ersteller stimmt: '+(doc.created_by===user.id?'JA':'NEIN'),
+        'Artist stimmt: '+(doc.artist_id===user.id?'JA':'NEIN'),
+        'Dateipfad stimmt: '+(doc.pdf_path===pdfPath?'JA':'NEIN'),
+        'PDF-Größe: '+pdf.size+' Bytes'
+      ];
+      if(doc.status!=='draft'||doc.created_by!==user.id||doc.artist_id!==user.id||doc.pdf_path!==pdfPath){
+        throw new Error('Diagnose vor Upload: '+checks.join(' | ')+' | Dokument-ID: '+documentId);
+      }
       savePdfButton.textContent='Test-PDF wird hochgeladen …';
       const {error:uploadError}=await client.storage.from('eve-documents').upload(pdfPath,pdf,{contentType:'application/pdf',upsert:false});
-      if(uploadError)throw new Error('PDF-Upload fehlgeschlagen: '+uploadError.message+' (Der Dokumenteintrag bleibt als Entwurf bestehen. Dokument-ID: '+documentId+'. Bitte vor einem erneuten Versuch prüfen.)');
+      if(uploadError)throw new Error('UPLOAD BLOCKIERT: '+uploadError.message+' | '+checks.join(' | ')+' | Dokument-ID: '+documentId+' | Der Entwurf bleibt erhalten. Keine weitere SQL-Abfrage nötig.');
       savePdfButton.textContent='Dokument wird abgeschlossen …';
       const {data:updated,error:updateError}=await client.from('eve_documents').update({status:'submitted'}).eq('id',documentId).eq('created_by',user.id).select('id');
       if(updateError||!updated?.length)throw new Error('PDF wurde hochgeladen, aber der Dokumentstatus konnte nicht abgeschlossen werden: '+(updateError?.message||'Keine aktualisierte Zeile')+' (Dokument-ID: '+documentId+'. Bitte vor einem erneuten Versuch prüfen.)');
+      pendingEveUpload=null;
       el('error').style.color='#b8f2c3';
       el('error').textContent='Test-PDF erfolgreich gespeichert und dem ausgewählten Testkunden zugeordnet.';
     }catch(err){el('error').style.color='#ffb5b5';el('error').textContent=err.message||String(err)}
     finally{savePdfButton.disabled=false;savePdfButton.textContent=oldLabel;el('error').scrollIntoView({block:'center'})}
   });
-  function clearEveSelection(){eveSelectedCustomerId=null;el('eveLinkBanner').hidden=true;el('eveLinkName').textContent=''}
+  function clearEveSelection(){pendingEveUpload=null;eveSelectedCustomerId=null;el('eveLinkBanner').hidden=true;el('eveLinkName').textContent=''}
   function openEveForCustomer(customer){
     if(!staffUserId)return;
     if(!confirm('EVE-Testbogen für '+customer.first_name+' '+customer.last_name+' öffnen? Bisherige Formulareingaben werden verworfen.'))return;

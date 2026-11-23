@@ -106,12 +106,16 @@ document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));
       }finally{clone.remove()}
       if(!(pdf instanceof Blob)||pdf.size<1000)throw new Error('PDF konnte nicht korrekt erstellt werden.');
       if(pdf.size>10*1024*1024)throw new Error('PDF ist größer als das Speicherlimit von 10 MB.');
+      // Die Storage-INSERT-Policy verlangt einen bereits vorhandenen eigenen draft-Eintrag.
+      savePdfButton.textContent='Dokumenteintrag wird angelegt …';
+      const {error:insertError}=await client.from('eve_documents').insert({id:documentId,customer_id:customerId,artist_id:user.id,created_by:user.id,status:'draft',pdf_path:pdfPath});
+      if(insertError)throw new Error('Dokumenteintrag konnte nicht angelegt werden: '+insertError.message+' (Es wurde keine PDF hochgeladen.)');
       savePdfButton.textContent='Test-PDF wird hochgeladen …';
       const {error:uploadError}=await client.storage.from('eve-documents').upload(pdfPath,pdf,{contentType:'application/pdf',upsert:false});
-      if(uploadError)throw new Error('PDF-Upload fehlgeschlagen: '+uploadError.message);
-      savePdfButton.textContent='Dokument wird zugeordnet …';
-      const {error:insertError}=await client.from('eve_documents').insert({id:documentId,customer_id:customerId,artist_id:user.id,created_by:user.id,status:'submitted',pdf_path:pdfPath});
-      if(insertError)throw new Error('PDF wurde hochgeladen, aber die Zuordnung in eve_documents ist fehlgeschlagen: '+insertError.message+' (Dateipfad: '+pdfPath+'). Bitte nicht erneut speichern, bevor wir das geprüft haben.');
+      if(uploadError)throw new Error('PDF-Upload fehlgeschlagen: '+uploadError.message+' (Der Dokumenteintrag bleibt als Entwurf bestehen. Dokument-ID: '+documentId+'. Bitte vor einem erneuten Versuch prüfen.)');
+      savePdfButton.textContent='Dokument wird abgeschlossen …';
+      const {data:updated,error:updateError}=await client.from('eve_documents').update({status:'submitted'}).eq('id',documentId).eq('created_by',user.id).select('id');
+      if(updateError||!updated?.length)throw new Error('PDF wurde hochgeladen, aber der Dokumentstatus konnte nicht abgeschlossen werden: '+(updateError?.message||'Keine aktualisierte Zeile')+' (Dokument-ID: '+documentId+'. Bitte vor einem erneuten Versuch prüfen.)');
       el('error').style.color='#b8f2c3';
       el('error').textContent='Test-PDF erfolgreich gespeichert und dem ausgewählten Testkunden zugeordnet.';
     }catch(err){el('error').style.color='#ffb5b5';el('error').textContent=err.message||String(err)}

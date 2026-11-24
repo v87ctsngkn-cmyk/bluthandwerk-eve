@@ -191,13 +191,15 @@ async function createCompleteEvePdf(){
     const note=document.createElement('p');note.textContent='Einverständniserklärungen werden geladen …';panel.append(note);
     const valid=()=>staffUserId===uid&&panel.isConnected&&!panel.hidden;
     try{
-      const {data,error}=await client.from('eve_documents').select('id,status,pdf_path').eq('customer_id',c.id).eq('status','submitted').order('id').limit(1000);
+      let {data,error}=await client.from('eve_documents').select('id,status,pdf_path,created_at').eq('customer_id',c.id).eq('status','submitted').order('created_at',{ascending:false,nullsFirst:false}).order('id').limit(1000);
+      if(error && error.code==='42703'){({data,error}=await client.from('eve_documents').select('id,status,pdf_path').eq('customer_id',c.id).eq('status','submitted').order('id').limit(1000));}
       if(!valid())return;
       if(error)throw error;
       note.textContent=data.length?data.length+' freigegebene EVE-Dokumente'+(data.length===1000?' (maximal 1000 angezeigt)':''):'Keine abgeschlossenen, für dich freigegebenen Dokumente vorhanden.';
       for(const d of data){
         const line=document.createElement('div');line.className='customer-item';
-        const label=document.createElement('p');label.textContent='Einverständniserklärung · '+d.id;line.append(label);
+        const label=document.createElement('strong');label.textContent='Einverständniserklärung';line.append(label);
+        const date=document.createElement('p');date.className='muted';const stamp=d.created_at?new Date(d.created_at):null;date.textContent=stamp&&!Number.isNaN(stamp.getTime())?'Erstellt: '+new Intl.DateTimeFormat('de-DE',{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Berlin'}).format(stamp)+' Uhr':'Erstellungsdatum nicht verfügbar · '+d.id;line.append(date);
         const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent='PDF herunterladen';line.append(b);panel.append(line);
         b.onclick=async()=>{
           if(!valid())return;b.disabled=true;

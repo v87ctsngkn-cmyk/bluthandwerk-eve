@@ -56,8 +56,43 @@ function fillEveFromCustomer(c){
 }
 window.bluthandwerkFillEveFromCustomer=fillEveFromCustomer;
 document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));document.addEventListener('eve-clear-customer',()=>{});const now=new Date();$('date').value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;show();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
-</script><script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.2/dist/html2pdf.bundle.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script id="staff-auth-script">
+</script><script src="https://cdn.jsdelivr.net/npm/jspdf@3.0.3/dist/jspdf.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+async function createCompleteEvePdf(){
+  const doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+  const source=document.getElementById('printable');
+  let y=15; const left=15, width=180, bottom=280;
+  function space(h){if(y+h>bottom){doc.addPage();y=15;}}
+  function write(text,size=10,bold=false){
+    doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);
+    const height=size*0.45+1;
+    const lines=doc.splitTextToSize(String(text),width);
+    for(const line of lines){space(height);doc.text(line,left,y+size*0.35);y+=height;}
+    y+=2;
+  }
+  async function imageData(img){
+    const loaded=new Image();loaded.src=img.src;await loaded.decode();
+    const c=document.createElement('canvas');c.width=loaded.naturalWidth;c.height=loaded.naturalHeight;
+    c.getContext('2d').drawImage(loaded,0,0);return {data:c.toDataURL('image/png'),ratio:c.width/c.height};
+  }
+  for(const node of source.children){
+    const tag=node.tagName;
+    if(tag==='IMG'){
+      const im=await imageData(node);const maxW=node.classList.contains('logo')?25:85;
+      const maxH=node.classList.contains('logo')?25:35;
+      const w=Math.min(maxW,maxH*im.ratio),h=w/im.ratio;
+      space(h+4);doc.addImage(im.data,'PNG',left,y,w,h);y+=h+4;
+    }else if(tag==='H1'||tag==='H2'){
+      space(24);y+=2;write(node.textContent,tag==='H1'?17:13,true);
+    }else if(tag==='OL'){
+      [...node.children].forEach((li,i)=>write((i+1)+'. '+li.textContent));
+    }else{write(node.textContent,10,false);}
+  }
+  const pages=doc.getNumberOfPages();
+  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('Bluthandwerk EVE · Testdokument · '+i+' / '+pages,15,290);}
+  return doc.output('blob');
+}
+</script><script id="staff-auth-script">
 (()=>{
   // Nur Project URL und Publishable/anon Key eintragen. NIEMALS service_role oder secret key.
   const SUPABASE_URL = 'https://oaprbdojvqbenelctozk.supabase.co';
@@ -79,7 +114,7 @@ document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));
   const savePdfButton=el('saveEvePdf');
   savePdfButton.addEventListener('click',async()=>{
     if(!staffUserId||!eveSelectedCustomerId){el('error').textContent='Bitte zuerst einen Testkunden über „EVE öffnen“ auswählen.';return}
-    if(!window.html2pdf){el('error').textContent='PDF-Bibliothek nicht geladen. Bitte Internetverbindung prüfen.';return}
+    if(!window.jspdf?.jsPDF){el('error').textContent='PDF-Bibliothek nicht geladen. Bitte Internetverbindung prüfen.';return}
     if(!buildEvePrintable())return;
     if(!confirm('NUR TESTDATEN: Dieses EVE-Dokument als PDF in Supabase speichern? Keine echten Gesundheitsdaten verwenden.'))return;
     savePdfButton.disabled=true;
@@ -92,20 +127,7 @@ document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));
       const customerId=eveSelectedCustomerId;
       documentId=(pendingEveUpload?.customerId===customerId ? pendingEveUpload.documentId : crypto.randomUUID());
       const pdfPath=documentId+'/eve.pdf';
-      const printable=el('printable');
-      const clone=printable.cloneNode(true);
-      clone.removeAttribute('id');
-      Object.assign(clone.style,{display:'block',position:'static',background:'#fff',color:'#111',fontFamily:'Arial,sans-serif',fontSize:'11px',lineHeight:'1.35',width:'700px',padding:'16px'});
-      clone.querySelectorAll('.logo').forEach(x=>{x.style.width='65px';x.style.float='right'});
-      clone.querySelectorAll('.sig').forEach(x=>{x.style.width='260px';x.style.maxHeight='110px'});
-      clone.querySelectorAll('.line').forEach(x=>{x.style.padding='4px 0';x.style.borderBottom='1px solid #ddd';x.style.overflowWrap='anywhere'});
-      clone.querySelectorAll('h2').forEach(x=>{x.style.marginTop='16px';x.style.fontSize='15px';x.style.borderBottom='1px solid #777'});
-      clone.querySelectorAll('h1').forEach(x=>{x.style.fontSize='22px'});
-      document.body.appendChild(clone);
-      let pdf;
-      try{
-        pdf=await window.html2pdf().set({margin:10,filename:'eve-test.pdf',image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(clone).outputPdf('blob');
-      }finally{clone.remove()}
+      const pdf=await createCompleteEvePdf();
       if(!(pdf instanceof Blob)||pdf.size<1000)throw new Error('PDF konnte nicht korrekt erstellt werden.');
       if(pdf.size>10*1024*1024)throw new Error('PDF ist größer als das Speicherlimit von 10 MB.');
       // Diagnose ohne Aenderung an RLS oder bestehenden Kundendaten.

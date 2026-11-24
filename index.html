@@ -202,6 +202,29 @@ async function createCompleteEvePdf(){
         const date=document.createElement('p');date.className='muted';const stamp=d.created_at?new Date(d.created_at):null;date.textContent=stamp&&!Number.isNaN(stamp.getTime())?'Erstellt: '+new Intl.DateTimeFormat('de-DE',{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Berlin'}).format(stamp)+' Uhr':'Erstellungsdatum nicht verfügbar · '+d.id;line.append(date);
         const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent='PDF herunterladen';line.append(b);panel.append(line);
         const preview=document.createElement('button');preview.type='button';preview.className='secondary';preview.textContent='PDF ansehen';preview.style.marginRight='10px';line.insertBefore(preview,b);
+        if(teamAdmin===uid){
+          const manage=document.createElement('button');manage.type='button';manage.className='secondary';manage.textContent='Freigaben verwalten';manage.style.marginLeft='10px';line.append(manage);
+          const accessPanel=document.createElement('div');accessPanel.hidden=true;line.append(accessPanel);
+          const allowed=()=>valid()&&teamAdmin===uid&&!accessPanel.hidden;
+          async function loadAccess(){
+            accessPanel.replaceChildren();const status=document.createElement('p');status.textContent='Freigaben werden geladen …';accessPanel.append(status);
+            try{
+              const [team,access]=await Promise.all([client.from('studio_staff').select('user_id,display_name,role,active').order('display_name'),client.from('eve_access').select('staff_id').eq('document_id',d.id)]);
+              if(!allowed())return;if(team.error)throw team.error;if(access.error)throw access.error;
+              const granted=new Set(access.data.map(x=>x.staff_id));status.textContent='Zugriffsberechtigungen für dieses Dokument';
+              for(const member of team.data){
+                const row=document.createElement('div');row.style.cssText='padding:8px 0;border-top:1px solid #555';const text=document.createElement('p');text.textContent=(member.display_name||member.user_id)+' · '+(member.active?'Aktiv':'Inaktiv')+' · '+(granted.has(member.user_id)?'Freigegeben':'Nicht freigegeben');row.append(text);accessPanel.append(row);
+                if(member.user_id===uid){text.textContent+=' · Eigenes Konto';continue;}
+                const has=granted.has(member.user_id);const action=document.createElement('button');action.type='button';action.className='secondary';action.textContent=has?'Freigabe entziehen':'Freigeben';action.disabled=!has&&!member.active;row.append(action);
+                action.onclick=async()=>{if(!allowed()||!confirm(action.textContent+' für '+(member.display_name||'Mitarbeiter')+'?'))return;for(const btn of accessPanel.querySelectorAll('button'))btn.disabled=true;try{
+                  const result=has?await client.from('eve_access').delete().eq('document_id',d.id).eq('staff_id',member.user_id).select('staff_id').single():await client.from('eve_access').insert({document_id:d.id,staff_id:member.user_id}).select('staff_id').single();
+                  if(!allowed())return;if(result.error)throw result.error;await loadAccess();
+                }catch(e){if(allowed()){await loadAccess();if(allowed()){const msg=document.createElement('p');msg.textContent='Änderung fehlgeschlagen: '+e.message;accessPanel.prepend(msg);}}}};
+              }
+            }catch(e){if(allowed())status.textContent='Freigaben konnten nicht geladen werden: '+e.message;}
+          }
+          manage.onclick=()=>{if(!valid()||teamAdmin!==uid)return;accessPanel.hidden=!accessPanel.hidden;if(!accessPanel.hidden)loadAccess();else accessPanel.replaceChildren();};
+        }
         preview.onclick=async()=>{
           if(!valid())return;
           const tab=window.open('about:blank','_blank');

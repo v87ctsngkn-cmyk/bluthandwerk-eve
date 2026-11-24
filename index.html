@@ -151,7 +151,7 @@ async function createCompleteEvePdf(){
         throw new Error('Diagnose vor Upload: '+checks.join(' | ')+' | Dokument-ID: '+documentId);
       }
       savePdfButton.textContent='Test-PDF wird hochgeladen …';
-      const {error:uploadError}=await client.storage.from('eve-documents').upload(pdfPath,pdf,{contentType:'application/pdf',upsert:false});
+      const {error:uploadError}=await client.storage.from('eve-document').upload(pdfPath,pdf,{contentType:'application/pdf',upsert:false});
       if(uploadError)throw new Error('UPLOAD BLOCKIERT: '+uploadError.message+' | '+checks.join(' | ')+' | Dokument-ID: '+documentId+' | Der Entwurf bleibt erhalten. Keine weitere SQL-Abfrage nötig.');
       savePdfButton.textContent='Dokument wird abgeschlossen …';
       const {data:updated,error:updateError}=await client.from('eve_documents').update({status:'submitted'}).eq('id',documentId).eq('created_by',user.id).select('id');
@@ -203,7 +203,7 @@ async function createCompleteEvePdf(){
           if(!valid())return;b.disabled=true;
           try{
             if(d.pdf_path!==d.id+'/eve.pdf')throw new Error('Ungültiger Dokumentpfad.');
-            const {data:blob,error}=await client.storage.from('eve-documents').download(d.pdf_path);
+            const {data:blob,error}=await client.storage.from('eve-document').download(d.pdf_path);
             if(!valid())return;if(error)throw error;
             const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='EVE-'+d.id+'.pdf';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
           }catch(e){if(valid())note.textContent='PDF konnte nicht geladen werden: '+e.message;}finally{b.disabled=false;}

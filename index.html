@@ -184,7 +184,34 @@ async function createCompleteEvePdf(){
   const customerStatus=t=>{el('customerStatus').textContent=t};
   function clearCustomers(){clearEveSelection();document.dispatchEvent(new Event('eve-clear-customer'));staffUserId=null;customers=[];customerRequest++;customerArea.hidden=true;customerList.replaceChildren();customerForm.hidden=true;customerForm.reset();customerEditingId=null}
   function openCustomerForm(customer=null){customerEditingId=customer?.id||null;customerForm.reset();el('customerFormTitle').textContent=customer?'Kunden bearbeiten':'Kunden anlegen';if(customer){el('customerFirst').value=customer.first_name;el('customerLast').value=customer.last_name;el('customerEmail').value=customer.email||'';el('customerPhone').value=customer.phone||''}customerForm.hidden=false;el('customerFirst').focus()}
-  function renderCustomers(){const q=el('customerSearch').value.trim().toLocaleLowerCase('de');customerList.replaceChildren();const matches=customers.filter(c=>[c.first_name,c.last_name,c.email,c.phone].some(v=>(v||'').toLocaleLowerCase('de').includes(q)));for(const c of matches){const item=document.createElement('div');item.className='customer-item';const name=document.createElement('strong');name.textContent=c.first_name+' '+c.last_name;item.append(name);const details=document.createElement('p');details.className='muted';details.textContent=[c.email,c.phone].filter(Boolean).join(' · ')||'Keine weiteren Kontaktdaten';item.append(details);const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='Bearbeiten';edit.addEventListener('click',()=>openCustomerForm(c));item.append(edit);const eve=document.createElement('button');eve.type='button';eve.textContent='EVE öffnen';eve.style.marginLeft='10px';eve.addEventListener('click',()=>openEveForCustomer(c));item.append(eve);customerList.append(item)}if(!matches.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Keine passenden Kunden gefunden.';customerList.append(empty)}}
+  async function openCustomerRecord(c,panel){
+    if(!staffUserId)return;
+    const uid=staffUserId;
+    panel.replaceChildren();panel.hidden=false;
+    const note=document.createElement('p');note.textContent='Einverständniserklärungen werden geladen …';panel.append(note);
+    const valid=()=>staffUserId===uid&&panel.isConnected&&!panel.hidden;
+    try{
+      const {data,error}=await client.from('eve_documents').select('id,status,pdf_path').eq('customer_id',c.id).eq('status','submitted').order('id').limit(1000);
+      if(!valid())return;
+      if(error)throw error;
+      note.textContent=data.length?data.length+' freigegebene EVE-Dokumente'+(data.length===1000?' (maximal 1000 angezeigt)':''):'Keine abgeschlossenen, für dich freigegebenen Dokumente vorhanden.';
+      for(const d of data){
+        const line=document.createElement('div');line.className='customer-item';
+        const label=document.createElement('p');label.textContent='Einverständniserklärung · '+d.id;line.append(label);
+        const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent='PDF herunterladen';line.append(b);panel.append(line);
+        b.onclick=async()=>{
+          if(!valid())return;b.disabled=true;
+          try{
+            if(d.pdf_path!==d.id+'/eve.pdf')throw new Error('Ungültiger Dokumentpfad.');
+            const {data:blob,error}=await client.storage.from('eve-documents').download(d.pdf_path);
+            if(!valid())return;if(error)throw error;
+            const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='EVE-'+d.id+'.pdf';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+          }catch(e){if(valid())note.textContent='PDF konnte nicht geladen werden: '+e.message;}finally{b.disabled=false;}
+        };
+      }
+    }catch(e){if(valid())note.textContent='Kundenakte konnte nicht geladen werden: '+e.message;}
+  }
+  function renderCustomers(){const q=el('customerSearch').value.trim().toLocaleLowerCase('de');customerList.replaceChildren();const matches=customers.filter(c=>[c.first_name,c.last_name,c.email,c.phone].some(v=>(v||'').toLocaleLowerCase('de').includes(q)));for(const c of matches){const item=document.createElement('div');item.className='customer-item';const name=document.createElement('strong');name.textContent=c.first_name+' '+c.last_name;item.append(name);const details=document.createElement('p');details.className='muted';details.textContent=[c.email,c.phone].filter(Boolean).join(' · ')||'Keine weiteren Kontaktdaten';item.append(details);const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='Bearbeiten';edit.addEventListener('click',()=>openCustomerForm(c));item.append(edit);const eve=document.createElement('button');eve.type='button';eve.textContent='EVE öffnen';eve.style.marginLeft='10px';eve.addEventListener('click',()=>openEveForCustomer(c));item.append(eve);const record=document.createElement('button');record.type='button';record.className='secondary';record.textContent='Kundenakte';record.style.marginLeft='10px';const panel=document.createElement('div');panel.hidden=true;record.onclick=()=>{if(!panel.hidden){panel.hidden=true;panel.replaceChildren();return}openCustomerRecord(c,panel)};item.append(record,panel);customerList.append(item)}if(!matches.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Keine passenden Kunden gefunden.';customerList.append(empty)}}
   async function loadCustomers(){if(!staffUserId)return;const id=staffUserId,request=++customerRequest;customerStatus('Kunden werden geladen …');const {data,error}=await client.from('customers').select('id,first_name,last_name,email,phone').order('last_name',{ascending:true}).order('first_name',{ascending:true}).limit(1000);if(request!==customerRequest||staffUserId!==id)return;if(error){customerStatus('Kunden konnten nicht geladen werden: '+error.message);return}customers=data||[];renderCustomers();customerStatus(customers.length+' Kunden geladen'+(customers.length===1000?' (maximal 1000 angezeigt)':'')+'.')}
   el('customerSearch').addEventListener('input',renderCustomers);
   el('customerRefresh').addEventListener('click',loadCustomers);

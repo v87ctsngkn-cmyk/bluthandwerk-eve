@@ -133,7 +133,7 @@ async function createCompleteEvePdf(){
         const photo=document.querySelector('input[name="photo"]:checked').value;
         el('error').textContent='Formulardaten werden übermittelt …';
         uncertain=true;
-        const response=await fetch(SUPABASE_URL+'/functions/v1/submit-eve-v2',{method:'POST',headers:{'Content-Type':'application/json',apikey:SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({token,action:'submit',version:'QR10',values,health,confirmations,photo,strokes})});
+        const response=await fetch(SUPABASE_URL+'/functions/v1/submit-eve-v2',{method:'POST',headers:{'Content-Type':'application/json',apikey:SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({token,action:'submit',version:'QR11',values,health,confirmations,photo,strokes})});
         const result=await response.json();
         if(!response.ok||result.success!==true){el('error').textContent='Übermittlung nicht bestätigt (HTTP '+response.status+'). Bitte im Studio prüfen lassen. Nicht erneut absenden.';return;}
         submitted=true;uncertain=false;
@@ -155,62 +155,48 @@ async function createCompleteEvePdf(){
   const customerArea=el('customerArea'),customerForm=el('customerForm'),customerList=el('customerList');
   let staffUserId=null,customerEditingId=null,customers=[],customerRequest=0;
   let eveSelectedCustomerId=null;
-  // Fehlgeschlagene Uploads innerhalb dieser Sitzung mit derselben Dokument-ID wiederholen.
-  let pendingEveUpload=null;
   const savePdfButton=el('saveEvePdf');
+  let staffStrokes=[], staffStroke=null, staffPointer=null, saving=false, blocked=false;
+  function resetStaffSignature(){staffStrokes=[];staffStroke=null;staffPointer=null;}
+  function staffPoint(e){const r=canvas.getBoundingClientRect();return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];}
+  canvas.addEventListener('pointerdown',e=>{if(staffPointer!==null)return;staffPointer=e.pointerId;staffStroke=[staffPoint(e)];staffStrokes.push(staffStroke);});
+  canvas.addEventListener('pointermove',e=>{if(staffStroke&&staffPointer===e.pointerId)staffStroke.push(staffPoint(e));});
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,e=>{if(staffPointer===e.pointerId){staffStroke=null;staffPointer=null;}});
+  el('clear').addEventListener('click',resetStaffSignature);
+  el('form').addEventListener('reset',resetStaffSignature);
+  savePdfButton.textContent='EVE serverseitig speichern (Test)';
   savePdfButton.addEventListener('click',async()=>{
-    if(!staffUserId||!eveSelectedCustomerId){el('error').textContent='Bitte zuerst einen Testkunden über „EVE öffnen“ auswählen.';return}
-    if(!window.jspdf?.jsPDF){el('error').textContent='PDF-Bibliothek nicht geladen. Bitte Internetverbindung prüfen.';return}
-    if(!buildEvePrintable())return;
-    if(!confirm('NUR TESTDATEN: Dieses EVE-Dokument als PDF in Supabase speichern? Keine echten Gesundheitsdaten verwenden.'))return;
-    savePdfButton.disabled=true;
-    const oldLabel=savePdfButton.textContent;
-    savePdfButton.textContent='Test-PDF wird erstellt …';
-    let documentId=null;
+    if(saving||blocked)return;
+    if(!staffUserId||!eveSelectedCustomerId){el('error').textContent='Bitte zuerst einen Testkunden über „EVE öffnen“ auswählen.';return;}
+    const original=step;
+    for(let i=0;i<steps.length;i++){step=i;const error=valid();if(error){show();el('error').textContent=error;return;}}
+    step=original;
+    if(!confirm('NUR TESTDATEN: EVE serverseitig speichern?'))return;
+    const uid=staffUserId, customerId=eveSelectedCustomerId;
+    saving=true;savePdfButton.disabled=true;
+    const oldLabel=savePdfButton.textContent;let sent=false;
     try{
+      const values=Object.fromEntries([...fields.map(x=>x[1]),'healthNotes','colorAge','laser','coverup','other','signName'].map(id=>[id,el(id).value]));
+      const health=Object.fromEntries(keys.map(k=>[k,{answer:document.querySelector(`input[name="q_${k}"]:checked`).value,detail:document.querySelector(`[name="detail_${k}"]`).value}]));
+      const confirmations=Object.fromEntries(['truth','risk','care','healthy','consent','privacy','reviewed'].map(k=>[k,el(k).checked]));
+      const photo=document.querySelector('input[name="photo"]:checked').value;
+      const strokes=JSON.parse(JSON.stringify(staffStrokes));
       const {data:{user},error:userError}=await client.auth.getUser();
-      if(userError||!user||user.id!==staffUserId)throw new Error('Mitarbeiteranmeldung ist nicht mehr gültig.');
-      const customerId=eveSelectedCustomerId;
-      documentId=(pendingEveUpload?.customerId===customerId ? pendingEveUpload.documentId : crypto.randomUUID());
-      const pdfPath=documentId+'/eve.pdf';
-      const pdf=await createCompleteEvePdf();
-      if(!(pdf instanceof Blob)||pdf.size<1000)throw new Error('PDF konnte nicht korrekt erstellt werden.');
-      if(pdf.size>10*1024*1024)throw new Error('PDF ist größer als das Speicherlimit von 10 MB.');
-      // Diagnose ohne Aenderung an RLS oder bestehenden Kundendaten.
-      savePdfButton.textContent='Dokumenteintrag wird angelegt …';
-      if(!pendingEveUpload || pendingEveUpload.documentId!==documentId){
-        const {error:insertError}=await client.from('eve_documents').insert({id:documentId,customer_id:customerId,artist_id:user.id,created_by:user.id,status:'draft',pdf_path:pdfPath});
-        if(insertError)throw new Error('Diagnose: Dokumenteintrag ANLEGEN fehlgeschlagen: '+insertError.message);
-        pendingEveUpload={documentId,customerId};
-      }
-      const {data:doc,error:readError}=await client.from('eve_documents').select('id,status,created_by,artist_id,pdf_path').eq('id',documentId).maybeSingle();
-      if(readError || !doc)throw new Error('Diagnose: Dokument angelegt, aber LESEN blockiert: '+(readError?.message||'Kein Datensatz sichtbar')+' | Dokument-ID: '+documentId);
-      const checks=[
-        'Dokument sichtbar: JA',
-        'Status: '+doc.status,
-        'Ersteller stimmt: '+(doc.created_by===user.id?'JA':'NEIN'),
-        'Artist stimmt: '+(doc.artist_id===user.id?'JA':'NEIN'),
-        'Dateipfad stimmt: '+(doc.pdf_path===pdfPath?'JA':'NEIN'),
-        'PDF-Größe: '+pdf.size+' Bytes'
-      ];
-      if(doc.status!=='draft'||doc.created_by!==user.id||doc.artist_id!==user.id||doc.pdf_path!==pdfPath){
-        throw new Error('Diagnose vor Upload: '+checks.join(' | ')+' | Dokument-ID: '+documentId);
-      }
-      savePdfButton.textContent='Test-PDF wird hochgeladen …';
-      const {error:uploadError}=await client.storage.from('eve-documents').upload(pdfPath,pdf,{contentType:'application/pdf',upsert:false});
-      if(uploadError)throw new Error('UPLOAD BLOCKIERT: '+uploadError.message+' | '+checks.join(' | ')+' | Dokument-ID: '+documentId+' | Der Entwurf bleibt erhalten. Keine weitere SQL-Abfrage nötig.');
-      savePdfButton.textContent='Dokument wird abgeschlossen …';
-      const {data:updated,error:updateError}=await client.from('eve_documents').update({status:'submitted'}).eq('id',documentId).eq('created_by',user.id).select('id');
-      if(updateError||!updated?.length)throw new Error('PDF wurde hochgeladen, aber der Dokumentstatus konnte nicht abgeschlossen werden: '+(updateError?.message||'Keine aktualisierte Zeile')+' (Dokument-ID: '+documentId+'. Bitte vor einem erneuten Versuch prüfen.)');
-      pendingEveUpload=null;
-      el('error').style.color='#b8f2c3';
-      el('error').textContent='Test-PDF erfolgreich gespeichert und dem ausgewählten Testkunden zugeordnet.';
-    }catch(err){el('error').style.color='#ffb5b5';el('error').textContent=err.message||String(err)}
-    finally{savePdfButton.disabled=false;savePdfButton.textContent=oldLabel;el('error').scrollIntoView({block:'center'})}
+      if(userError||user?.id!==uid||staffUserId!==uid||eveSelectedCustomerId!==customerId)throw Error('Mitarbeiteranmeldung oder Kundenauswahl geändert.');
+      const {data:token,error}=await client.rpc('create_eve_qr',{p_customer_id:customerId});
+      if(error||typeof token!=='string'||! /^[a-f0-9]{64}$/.test(token))throw Error('Speicherzugang konnte nicht erstellt werden.');
+      if(staffUserId!==uid||eveSelectedCustomerId!==customerId)throw Error('Kundenauswahl geändert.');
+      savePdfButton.textContent='Server erstellt PDF …';sent=true;
+      const response=await fetch(SUPABASE_URL+'/functions/v1/submit-eve-v2',{method:'POST',headers:{'Content-Type':'application/json',apikey:SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({token,action:'submit',version:'QR11',values,health,confirmations,photo,strokes})});
+      const result=await response.json();
+      if(!response.ok||result.success!==true)throw Error('Übermittlung nicht bestätigt (HTTP '+response.status+').');
+      blocked=true;el('error').style.color='#b8f2c3';el('error').textContent='Test-EVE erfolgreich gespeichert. Bitte Kundenakte prüfen. Für einen neuen Bogen erneut einen Kunden auswählen.';
+    }catch(err){if(sent)blocked=true;el('error').style.color='#ffb5b5';el('error').textContent=err.message+(sent?' Bitte Kundenakte prüfen, nicht erneut absenden.':'');}
+    finally{saving=false;savePdfButton.disabled=blocked;savePdfButton.textContent=oldLabel;el('error').scrollIntoView({block:'center'});}
   });
-  function clearEveSelection(){pendingEveUpload=null;eveSelectedCustomerId=null;el('eveLinkBanner').hidden=true;el('eveLinkName').textContent=''}
+  function clearEveSelection(){eveSelectedCustomerId=null;resetStaffSignature();el('eveLinkBanner').hidden=true;el('eveLinkName').textContent=''}
   function openEveForCustomer(customer){
-    if(!staffUserId)return;
+    if(!staffUserId||saving)return;
     if(!confirm('EVE-Testbogen für '+customer.first_name+' '+customer.last_name+' öffnen? Bisherige Formulareingaben werden verworfen.'))return;
     const details={first_name:customer.first_name,last_name:customer.last_name,email:customer.email||'',phone:customer.phone||''};
     const filled=typeof window.bluthandwerkFillEveFromCustomer==='function'
@@ -220,6 +206,7 @@ async function createCompleteEvePdf(){
       alert('Die Kundendaten konnten nicht in die EVE übernommen werden. Bitte Seite neu laden.');
       return;
     }
+    blocked=false;savePdfButton.disabled=false;
     eveSelectedCustomerId=customer.id;
     el('eveLinkName').textContent=customer.first_name+' '+customer.last_name;
     el('eveLinkBanner').hidden=false;
@@ -300,7 +287,7 @@ async function createCompleteEvePdf(){
       }
     }catch(e){if(valid())note.textContent='Kundenakte konnte nicht geladen werden: '+e.message;}
   }
-  function renderCustomers(){const q=el('customerSearch').value.trim().toLocaleLowerCase('de');customerList.replaceChildren();const matches=customers.filter(c=>[c.first_name,c.last_name,c.email,c.phone].some(v=>(v||'').toLocaleLowerCase('de').includes(q)));for(const c of matches){const item=document.createElement('div');item.className='customer-item';const name=document.createElement('strong');name.textContent=c.first_name+' '+c.last_name;item.append(name);const details=document.createElement('p');details.className='muted';details.textContent=[c.email,c.phone].filter(Boolean).join(' · ')||'Keine weiteren Kontaktdaten';item.append(details);const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='Bearbeiten';edit.addEventListener('click',()=>openCustomerForm(c));item.append(edit);const eve=document.createElement('button');eve.type='button';eve.textContent='EVE öffnen';eve.style.marginLeft='10px';eve.addEventListener('click',()=>openEveForCustomer(c));item.append(eve);const record=document.createElement('button');record.type='button';record.className='secondary';record.textContent='Kundenakte';record.style.marginLeft='10px';const panel=document.createElement('div');panel.hidden=true;record.onclick=()=>{if(!panel.hidden){panel.hidden=true;panel.replaceChildren();return}openCustomerRecord(c,panel)};item.append(record);const qrButton=document.createElement('button');qrButton.type='button';qrButton.className='secondary';qrButton.textContent='QR-Code erstellen';qrButton.style.marginLeft='10px';const qrPanel=document.createElement('div');qrPanel.hidden=true;qrButton.onclick=async()=>{if(!staffUserId)return;if(!qrPanel.hidden){qrPanel.hidden=true;qrPanel.replaceChildren();return}if(typeof window.qrcode!=='function'){alert('QR-Bibliothek konnte nicht geladen werden.');return}const uid=staffUserId;qrButton.disabled=true;qrPanel.hidden=false;qrPanel.textContent='Test-QR wird erstellt …';try{const {data,error}=await client.rpc('create_eve_qr',{p_customer_id:c.id});if(uid!==staffUserId||!qrPanel.isConnected)return;if(error)throw error;if(typeof data!=='string'||! /^[a-f0-9]{64}$/i.test(data))throw new Error('Unerwartetes Tokenformat');const target=new URL(location.pathname,location.origin);target.searchParams.set("v","qr10");target.hash='eve-qr='+data;const code=window.qrcode(0,'M');code.addData(target.href);code.make();const canvas=document.createElement('canvas');const n=code.getModuleCount(),scale=5;canvas.width=canvas.height=(n+8)*scale;canvas.style.cssText='display:block;width:320px;max-width:100%;height:auto;aspect-ratio:1 / 1;touch-action:auto;image-rendering:pixelated;margin:12px auto;';const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000';for(let r=0;r<n;r++)for(let col=0;col<n;col++)if(code.isDark(r,col))ctx.fillRect((col+4)*scale,(r+4)*scale,scale,scale);const note=document.createElement('p');note.textContent='Test-QR · Version QR6 · 30 Minuten gültig · Kundenübermittlung noch deaktiviert.';const qrImage=document.createElement('img');qrImage.src=canvas.toDataURL('image/png');qrImage.alt='QR-Code';qrImage.style.cssText='display:block;width:280px;max-width:100%;height:auto;aspect-ratio:1 / 1;object-fit:contain;margin:12px auto;image-rendering:pixelated;';qrPanel.replaceChildren(note,qrImage);setTimeout(()=>{qrPanel.replaceChildren();qrPanel.hidden=true},30*60*1000);}catch(e){if(uid===staffUserId&&qrPanel.isConnected)qrPanel.textContent='QR konnte nicht erstellt werden: '+e.message;}finally{qrButton.disabled=false;}};item.append(qrButton,qrPanel,panel);customerList.append(item)}if(!matches.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Keine passenden Kunden gefunden.';customerList.append(empty)}}
+  function renderCustomers(){const q=el('customerSearch').value.trim().toLocaleLowerCase('de');customerList.replaceChildren();const matches=customers.filter(c=>[c.first_name,c.last_name,c.email,c.phone].some(v=>(v||'').toLocaleLowerCase('de').includes(q)));for(const c of matches){const item=document.createElement('div');item.className='customer-item';const name=document.createElement('strong');name.textContent=c.first_name+' '+c.last_name;item.append(name);const details=document.createElement('p');details.className='muted';details.textContent=[c.email,c.phone].filter(Boolean).join(' · ')||'Keine weiteren Kontaktdaten';item.append(details);const edit=document.createElement('button');edit.type='button';edit.className='secondary';edit.textContent='Bearbeiten';edit.addEventListener('click',()=>openCustomerForm(c));item.append(edit);const eve=document.createElement('button');eve.type='button';eve.textContent='EVE öffnen';eve.style.marginLeft='10px';eve.addEventListener('click',()=>openEveForCustomer(c));item.append(eve);const record=document.createElement('button');record.type='button';record.className='secondary';record.textContent='Kundenakte';record.style.marginLeft='10px';const panel=document.createElement('div');panel.hidden=true;record.onclick=()=>{if(!panel.hidden){panel.hidden=true;panel.replaceChildren();return}openCustomerRecord(c,panel)};item.append(record);const qrButton=document.createElement('button');qrButton.type='button';qrButton.className='secondary';qrButton.textContent='QR-Code erstellen';qrButton.style.marginLeft='10px';const qrPanel=document.createElement('div');qrPanel.hidden=true;qrButton.onclick=async()=>{if(!staffUserId)return;if(!qrPanel.hidden){qrPanel.hidden=true;qrPanel.replaceChildren();return}if(typeof window.qrcode!=='function'){alert('QR-Bibliothek konnte nicht geladen werden.');return}const uid=staffUserId;qrButton.disabled=true;qrPanel.hidden=false;qrPanel.textContent='Test-QR wird erstellt …';try{const {data,error}=await client.rpc('create_eve_qr',{p_customer_id:c.id});if(uid!==staffUserId||!qrPanel.isConnected)return;if(error)throw error;if(typeof data!=='string'||! /^[a-f0-9]{64}$/i.test(data))throw new Error('Unerwartetes Tokenformat');const target=new URL(location.pathname,location.origin);target.searchParams.set("v","qr11");target.hash='eve-qr='+data;const code=window.qrcode(0,'M');code.addData(target.href);code.make();const canvas=document.createElement('canvas');const n=code.getModuleCount(),scale=5;canvas.width=canvas.height=(n+8)*scale;canvas.style.cssText='display:block;width:320px;max-width:100%;height:auto;aspect-ratio:1 / 1;touch-action:auto;image-rendering:pixelated;margin:12px auto;';const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000';for(let r=0;r<n;r++)for(let col=0;col<n;col++)if(code.isDark(r,col))ctx.fillRect((col+4)*scale,(r+4)*scale,scale,scale);const note=document.createElement('p');note.textContent='Test-QR · Version QR11 · 30 Minuten gültig · einmalig verwendbar.';const qrImage=document.createElement('img');qrImage.src=canvas.toDataURL('image/png');qrImage.alt='QR-Code';qrImage.style.cssText='display:block;width:280px;max-width:100%;height:auto;aspect-ratio:1 / 1;object-fit:contain;margin:12px auto;image-rendering:pixelated;';qrPanel.replaceChildren(note,qrImage);setTimeout(()=>{qrPanel.replaceChildren();qrPanel.hidden=true},30*60*1000);}catch(e){if(uid===staffUserId&&qrPanel.isConnected)qrPanel.textContent='QR konnte nicht erstellt werden: '+e.message;}finally{qrButton.disabled=false;}};item.append(qrButton,qrPanel,panel);customerList.append(item)}if(!matches.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Keine passenden Kunden gefunden.';customerList.append(empty)}}
   async function loadCustomers(){if(!staffUserId)return;const id=staffUserId,request=++customerRequest;customerStatus('Kunden werden geladen …');const {data,error}=await client.from('customers').select('id,first_name,last_name,email,phone').order('last_name',{ascending:true}).order('first_name',{ascending:true}).limit(1000);if(request!==customerRequest||staffUserId!==id)return;if(error){customerStatus('Kunden konnten nicht geladen werden: '+error.message);return}customers=data||[];renderCustomers();customerStatus(customers.length+' Kunden geladen'+(customers.length===1000?' (maximal 1000 angezeigt)':'')+'.')}
   el('customerSearch').addEventListener('input',renderCustomers);
   el('customerRefresh').addEventListener('click',loadCustomers);

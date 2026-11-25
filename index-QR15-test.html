@@ -1,0 +1,444 @@
+<!doctype html><html lang="de"><head><meta name="referrer" content="no-referrer"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111111"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="BHW EVE"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><title>Bluthandwerk EVE · Tattoo Kollektiv</title><style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#111;color:#f3f3f3}*{box-sizing:border-box}body{margin:0}main{max-width:940px;margin:auto;padding:22px}header{display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #555;padding:8px 0 20px}header img{width:108px;height:108px;object-fit:contain}h1{font-size:clamp(26px,5vw,43px);margin:6px 0}h2{font-size:24px;margin:0 0 14px}h3{font-size:17px;margin:22px 0 8px}.eyebrow{font-size:12px;letter-spacing:.15em;color:#bdbdbd;font-weight:800}.muted{color:#b7b7b7;font-size:14px;line-height:1.5}.card{background:#202020;border:1px solid #444;border-radius:14px;padding:22px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px}label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}input:not([type=radio]):not([type=checkbox]),textarea,select{width:100%;padding:13px;border-radius:8px;border:1px solid #6a6a6a;background:#121212;color:#fff;font:inherit;font-size:16px}textarea{min-height:84px}input[type=checkbox],input[type=radio]{accent-color:#f5f5f5;width:19px;height:19px;vertical-align:middle}.question{border:0;border-bottom:1px solid #454545;padding:15px 0;margin:0}.question legend{font-weight:650;line-height:1.5;padding-top:10px}.choices{display:flex;flex-wrap:wrap;gap:16px}.choices label{font-weight:450;white-space:nowrap}.detail{margin-top:5px}.tick{display:flex;align-items:flex-start;gap:12px;line-height:1.55;font-weight:500}.tick input{flex-shrink:0;margin-top:2px}.step{display:none}.step.active{display:block}.progress{background:#424242;border-radius:12px;height:6px;margin:20px 0 8px;overflow:hidden}.progress>div{height:100%;background:#fff;transition:width .2s}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0}button{border:0;border-radius:9px;padding:14px 20px;background:#f4f4f4;color:#111;font-weight:750;font-size:16px;cursor:pointer}.secondary{background:#333;color:#fff;border:1px solid #777}.error{color:#ffb5b5;font-weight:700;min-height:24px}.signature{background:#fff;border-radius:8px;overflow:hidden}.signature canvas{display:block;width:100%;height:190px;touch-action:none}.sign-note{color:#333;padding:0 12px 10px;font-size:12px}ol li{line-height:1.6;margin-bottom:10px}#printable{display:none}.notice{border-left:3px solid #999;padding-left:12px}.small{font-size:12px} @media(max-width:650px){main{padding:14px}.card{padding:16px}.grid{grid-template-columns:1fr}header img{width:76px;height:76px}.choices{gap:8px 16px}}@media print{:root{color-scheme:light}body{background:white;color:#111}main{display:none}#printable{display:block!important;color:#111;font:10pt Arial,sans-serif}#printable h1{font-size:19pt}#printable h2{font-size:12pt;border-bottom:1px solid #777;margin-top:17px}#printable p{margin:5px 0;line-height:1.4}#printable .line{padding:4px 0;border-bottom:1px solid #ddd;overflow-wrap:anywhere}#printable img.logo{width:65px;float:right}#printable img.sig{width:270px;max-height:110px;object-fit:contain;object-position:left}#printable .pagebreak{break-before:page}#printable .notice{font-size:9pt;border:1px solid #999;padding:8px}#printable ol li{margin-bottom:4px}@page{size:A4;margin:13mm}}</style><style id="staff-auth-style">
+#staffAuth{max-width:940px;margin:20px auto;padding:0 22px}#staffAuth .auth-card{background:#202020;border:1px solid #555;border-radius:14px;padding:22px}#staffAuth .auth-row{display:flex;gap:10px;flex-wrap:wrap}#staffAuth .auth-row button{flex:1}#staffAuth .auth-msg{min-height:1.4em;color:#ddd}#staffAuth [hidden]{display:none!important}#staffAuth input{margin-bottom:10px}body.recovery-mode main{display:none}body.recovery-mode #staffAuth{margin-top:8vh}body.recovery-mode #authLogin{display:none}body.recovery-mode #authRecovery{display:block!important}
+</style><style id="customer-style">
+#customerArea{max-width:940px;margin:18px auto;padding:0 22px}#customerArea[hidden]{display:none!important}#customerArea .customer-card{background:#202020;border:1px solid #555;border-radius:14px;padding:22px}#customerArea .customer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}#customerArea .customer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}#customerArea .customer-list{display:grid;gap:10px;margin-top:16px}#customerArea .customer-item{padding:14px;border:1px solid #555;border-radius:9px;background:#171717;overflow-wrap:anywhere}#customerArea .customer-item button{margin-top:10px}#customerArea .customer-status{min-height:1.5em;color:#ddd}#customerArea .customer-item strong{font-size:17px}@media(max-width:650px){#customerArea .customer-grid{grid-template-columns:1fr}#customerArea .customer-card{padding:16px}}
+</style><style id="eve-link-style">#eveLinkBanner{max-width:940px;margin:16px auto 0;padding:15px 20px;border:1px solid #777;border-radius:12px;background:#242424}#eveLinkBanner[hidden]{display:none!important}#eveLinkBanner .eve-link-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}#eveLinkBanner p{margin:5px 0}#eveLinkBanner button{padding:9px 14px;font-size:14px}</style><style>main[hidden],#staffAgreement[hidden],.recovery-mode #staffAgreement{display:none!important}</style></head><body><section id="staffAuth" aria-label="Mitarbeiteranmeldung"><div class="auth-card">
+<div class="eyebrow">BLUTHANDWERK · MITARBEITERBEREICH</div><h2>Studio-Login (Testversion)</h2>
+<p class="muted">QR15 · Testbetrieb. Ausschließlich fiktive Daten verwenden.</p>
+<div id="authLogin"><label for="authEmail">E-Mail</label><input id="authEmail" type="email" autocomplete="username" placeholder="name@studio.de"><label for="authPassword">Passwort</label><input id="authPassword" type="password" autocomplete="current-password"><div class="auth-row"><button type="button" id="authSignIn">Anmelden</button><button type="button" class="secondary" id="authResetRequest">Passwort-Link anfordern</button><button type="button" class="secondary" id="authSignOut" hidden>Abmelden</button></div></div>
+<div id="authRecovery" hidden><h3>Neues Passwort festlegen</h3><p class="muted">Mindestens 12 Zeichen verwenden. Das Passwort wird nur an Supabase übermittelt.</p><label for="authNewPassword">Neues Passwort</label><input id="authNewPassword" type="password" autocomplete="new-password" minlength="12"><label for="authNewPassword2">Passwort wiederholen</label><input id="authNewPassword2" type="password" autocomplete="new-password" minlength="12"><button type="button" id="authSavePassword">Passwort speichern</button></div>
+<p id="authMessage" class="auth-msg" role="status" aria-live="polite"></p></div></section><section id="staffAgreement" hidden style="max-width:940px;margin:18px auto;padding:22px"><div style="background:#202020;border:1px solid #555;border-radius:14px;padding:22px"><h2>Mitarbeiterverpflichtung</h2><p class="muted">BHW-EVE-2026-11-24-v1 · Testversion</p><div style="white-space:pre-wrap;overflow-wrap:anywhere">DATENSCHUTZ-, VERTRAULICHKEITS- UND
+NUTZUNGSVERPFLICHTUNG – EVE
+
+ENTWURF – TESTVERSION
+
+Bluthandwerk Tätowierungen
+Klüser &amp; Klüser GbR
+Vogelsangerstr. 84
+50823 Köln
+
+1. Ich verwende EVE ausschließlich für berechtigte
+studio- und tätigkeitsbezogene Zwecke.
+
+2. Ich behandle sämtliche Kundendaten,
+Gesundheitsdaten, Unterschriften und Dokumente
+vertraulich. Diese Verpflichtung besteht auch
+nach Beendigung der Zusammenarbeit fort.
+
+3. Ich verwende ausschließlich mein persönliches
+Benutzerkonto und gebe Zugangsdaten nicht weiter.
+Meine verwendeten Geräte sichere ich gegen
+unbefugten Zugriff.
+
+4. Ich greife ausschließlich auf Daten zu,
+für deren Verarbeitung ich berechtigt bin.
+Unbefugte Kopien, Screenshots, private Backups
+und Weitergaben sind untersagt.
+
+5. Datenschutzverletzungen und verdächtige
+Zugriffe melde ich unverzüglich der Studioleitung.
+
+6. Ich beachte die geltenden Datenschutz-,
+Aufbewahrungs- und Löschvorgaben.
+
+7. Nach Beendigung der Zusammenarbeit darf
+ich EVE nicht weiter nutzen. Unberechtigt
+angefertigte Kopien sind zu löschen.
+
+8. Meine selbstständige Tätigkeit und die
+gesondert zu regelnde datenschutzrechtliche
+Verantwortlichkeit bleiben unberührt.
+
+Ich habe diese Verpflichtung gelesen,
+verstanden und bestätige sie durch meine
+persönliche Unterschrift.</div><form id="agreementForm"><label>Vollständiger Name<input id="agreementName" required minlength="3" maxlength="150" autocomplete="name"></label><label><input type="checkbox" id="agreementConfirmed" required> Ich bestätige die oben stehende Verpflichtung.</label><p>Persönliche Unterschrift</p><canvas id="agreementCanvas" width="800" height="240" style="width:100%;height:160px;background:white;touch-action:none;border-radius:6px"></canvas><button type="button" id="agreementClear" class="secondary">Unterschrift löschen</button><button type="submit" id="agreementSubmit">Verpflichtung unterschreiben (Test)</button></form><p id="agreementStatus" role="status"></p></div></section><section id="teamArea" hidden style="max-width:940px;margin:18px auto;padding:0 22px"><div style="background:#202020;border:1px solid #555;border-radius:14px;padding:22px"><h2>Studioverwaltung</h2><p class="muted">Nur für Administratoren. Bestehende Auth-Konten können per Benutzer-ID hinzugefügt werden.</p><button type="button" class="secondary" id="teamRefresh">Team aktualisieren</button><p id="teamStatus" role="status"></p><div id="teamList"></div><form id="teamAdd"><h3>Mitarbeiter hinzufügen</h3><label>Benutzer-ID aus Supabase Authentication<input id="teamId" required></label><label>Anzeigename<input id="teamName" required maxlength="120"></label><label>Rolle<select id="teamRole"><option value="artist">Tätowierer</option><option value="admin">Administrator</option></select></label><button type="submit">Mitarbeiter hinzufügen (zunächst inaktiv)</button></form></div></section><section id="customerArea" aria-label="Kundenverwaltung" hidden><div class="customer-card"><div class="eyebrow">BLUTHANDWERK · STUDIOVERWALTUNG</div><h2>Gemeinsame Kundenverwaltung</h2><p class="muted">Nur Kontaktdaten. Keine Gesundheitsangaben, EVE-Dokumente oder Unterschriften hier speichern.</p><label for="customerSearch">Kunden suchen</label><input id="customerSearch" type="search" placeholder="Vorname oder Nachname (mind. 3 Zeichen)"><div class="customer-actions"><button type="button" id="customerRefresh" class="secondary">Suchen / aktualisieren</button><button type="button" id="customerNew">Neuen Kunden anlegen</button></div><p id="customerStatus" class="customer-status" role="status" aria-live="polite"></p><div id="customerList" class="customer-list"></div><form id="customerForm" hidden><h3 id="customerFormTitle">Kunden anlegen</h3><div class="customer-grid"><div><label for="customerFirst">Vorname *</label><input id="customerFirst" required maxlength="100" autocomplete="off"></div><div><label for="customerLast">Nachname *</label><input id="customerLast" required maxlength="100" autocomplete="off"></div><div><label for="customerEmail">E-Mail</label><input id="customerEmail" type="email" maxlength="254" autocomplete="off"></div><div><label for="customerPhone">Telefon</label><input id="customerPhone" type="tel" maxlength="50" autocomplete="off"></div></div><div class="customer-actions"><button type="submit" id="customerSave">Kontaktdaten speichern</button><button type="button" id="customerCancel" class="secondary">Abbrechen</button></div></form></div></section><section id="eveLinkBanner" hidden aria-live="polite"><strong>EVE für ausgewählten Testkunden</strong><p id="eveLinkName"></p><p class="muted">Ausgewählter Testkunde für die serverseitige EVE-Speicherung.</p><div class="eve-link-actions"><button type="button" id="eveLinkClear" class="secondary">Zuordnung aufheben</button></div></section><main hidden><div class="muted small">App-Version QR15 · Test</div><header><div><div class="eyebrow">BLUTHANDWERK TÄTOWIERUNGEN</div><h1>Einverständnis­erklärung</h1><div class="muted">Tattoo Kollektiv · Digitale EVE · Entwurf 2.0</div></div><img src="studio-logo.jpg" alt="Original-Logo Tattoo Kollektiv"></header><div class="progress"><div id="bar" style="width:16.67%"></div></div><p class="muted" id="counter">Schritt 1 von 6</p><form id="form" novalidate>
+<section class="step active"><h2>01 · Persönliche Angaben</h2><div class="card"><div class="grid"><div><label for="first">Vorname *</label><input id="first" required autocomplete="given-name"></div><div><label for="last">Nachname *</label><input id="last" required autocomplete="family-name"></div><div><label for="birth">Geburtsdatum *</label><input id="birth" type="date" required></div><div><label for="birthplace">Geburtsort</label><input id="birthplace"></div><div><label for="street">Straße *</label><input id="street" required></div><div><label for="house">Hausnummer *</label><input id="house" required></div><div><label for="zip">PLZ *</label><input id="zip" required inputmode="numeric"></div><div><label for="city">Wohnort *</label><input id="city" required></div><div><label for="country">Land</label><input id="country" value="Deutschland"></div><div><label for="state">Bundesland</label><input id="state"></div><div><label for="phone">Telefon</label><input id="phone" type="tel"></div><div><label for="email">E-Mail</label><input id="email" type="email"></div></div></div><h2>02 · Tätowierung</h2><div class="card"><div class="grid"><div><label for="date">Datum der Tätowierung *</label><input id="date" type="date" required></div><div><label for="studio">Tattoo-Studio</label><input id="studio" value="Bluthandwerk Tätowierungen"></div><div><label for="artist">Tätowierer/in *</label><input id="artist" required></div><div><label for="placement">Körperstelle *</label><input id="placement" required></div></div><label for="motif">Motiv / Beschreibung *</label><textarea id="motif" required></textarea></div></section>
+<section class="step"><h2>03 · Gesundheitsfragen</h2><p class="muted">Die Fragen orientieren sich an der hochgeladenen zweiseitigen EVE. Gesundheitsangaben sind besonders schützenswert. Nur mit Testdaten verwenden, bis ein sicherer Umgang mit echten Daten eingerichtet ist.</p><div class="card"><fieldset class="question"><legend>1. Bluterkrankung oder erhöhte Blutungsneigung?</legend><div class="choices"><label><input type="radio" name="q_blood" value="Ja" required> Ja</label><label><input type="radio" name="q_blood" value="Nein"> Nein</label><label><input type="radio" name="q_blood" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_blood" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>2. Hauterkrankungen (z. B. Neurodermitis)?</legend><div class="choices"><label><input type="radio" name="q_skin" value="Ja" required> Ja</label><label><input type="radio" name="q_skin" value="Nein"> Nein</label><label><input type="radio" name="q_skin" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_skin" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>3. Blutverdünnende Medikamente (z. B. Marcumar, Aspirin, Heparin) eingenommen?</legend><div class="choices"><label><input type="radio" name="q_thinners" value="Ja" required> Ja</label><label><input type="radio" name="q_thinners" value="Nein"> Nein</label><label><input type="radio" name="q_thinners" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_thinners" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>4. Allergien?</legend><div class="choices"><label><input type="radio" name="q_allergies" value="Ja" required> Ja</label><label><input type="radio" name="q_allergies" value="Nein"> Nein</label><label><input type="radio" name="q_allergies" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_allergies" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>5. Häufiger Herpes?</legend><div class="choices"><label><input type="radio" name="q_herpes" value="Ja" required> Ja</label><label><input type="radio" name="q_herpes" value="Nein"> Nein</label><label><input type="radio" name="q_herpes" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_herpes" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>6. Infektionskrankheiten (Hepatitis, HIV, MRSA etc.)?</legend><div class="choices"><label><input type="radio" name="q_infections" value="Ja" required> Ja</label><label><input type="radio" name="q_infections" value="Nein"> Nein</label><label><input type="radio" name="q_infections" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_infections" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>7. In den letzten 7 Tagen Medikamente eingenommen?</legend><div class="choices"><label><input type="radio" name="q_meds" value="Ja" required> Ja</label><label><input type="radio" name="q_meds" value="Nein"> Nein</label><label><input type="radio" name="q_meds" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_meds" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>8. Sonstige chronische oder akute Krankheiten?</legend><div class="choices"><label><input type="radio" name="q_illness" value="Ja" required> Ja</label><label><input type="radio" name="q_illness" value="Nein"> Nein</label><label><input type="radio" name="q_illness" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_illness" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>9. In den letzten 24 Stunden Alkohol und/oder andere Betäubungsmittel konsumiert?</legend><div class="choices"><label><input type="radio" name="q_alcohol" value="Ja" required> Ja</label><label><input type="radio" name="q_alcohol" value="Nein"> Nein</label><label><input type="radio" name="q_alcohol" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_alcohol" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>10. In den letzten 24 Stunden blutverdünnende Medikamente appliziert?</legend><div class="choices"><label><input type="radio" name="q_recentmeds" value="Ja" required> Ja</label><label><input type="radio" name="q_recentmeds" value="Nein"> Nein</label><label><input type="radio" name="q_recentmeds" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_recentmeds" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>11. Beeinträchtigungen der Willensbildungs- oder Urteilsfähigkeit?</legend><div class="choices"><label><input type="radio" name="q_capacity" value="Ja" required> Ja</label><label><input type="radio" name="q_capacity" value="Nein"> Nein</label><label><input type="radio" name="q_capacity" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_capacity" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>12. Im zu tätowierenden Bereich chirurgische Eingriffe oder Strahlenbehandlungen vorgenommen?</legend><div class="choices"><label><input type="radio" name="q_surgery" value="Ja" required> Ja</label><label><input type="radio" name="q_surgery" value="Nein"> Nein</label><label><input type="radio" name="q_surgery" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_surgery" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>13. Neigung zu Heilbildung einer Sarkoidose? (Formulierung aus der Vorlage – fachlich prüfen)</legend><div class="choices"><label><input type="radio" name="q_sarcoid" value="Ja" required> Ja</label><label><input type="radio" name="q_sarcoid" value="Nein"> Nein</label><label><input type="radio" name="q_sarcoid" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_sarcoid" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>14. In den vergangenen 4 Monaten mehr als üblich vorkommendem Maß UV-Strahlung ausgesetzt?</legend><div class="choices"><label><input type="radio" name="q_uv" value="Ja" required> Ja</label><label><input type="radio" name="q_uv" value="Nein"> Nein</label><label><input type="radio" name="q_uv" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_uv" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>15. Besteht eine Schwangerschaft? (falls zutreffend)</legend><div class="choices"><label><input type="radio" name="q_pregnancy" value="Ja" required> Ja</label><label><input type="radio" name="q_pregnancy" value="Nein"> Nein</label><label><input type="radio" name="q_pregnancy" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_pregnancy" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset>
+<fieldset class="question"><legend>16. Wird gestillt? (falls zutreffend)</legend><div class="choices"><label><input type="radio" name="q_nursing" value="Ja" required> Ja</label><label><input type="radio" name="q_nursing" value="Nein"> Nein</label><label><input type="radio" name="q_nursing" value="Nicht zutreffend / unklar"> Nicht zutreffend / unklar</label></div><input class="detail" name="detail_nursing" placeholder="Falls ja: Welche? / Ergänzung (optional)"></fieldset><label for="healthNotes">Weitere gesundheitliche Angaben / Anmerkungen</label><textarea id="healthNotes"></textarea></div></section>
+<section class="step"><h2>04 · Besondere Umstände</h2><div class="card"><label for="colorAge">Falls die zu tätowierenden Farben unter einem Jahr alt sind: Alter der Farben in Monaten (falls bekannt)</label><input id="colorAge" placeholder="Optional"><label for="laser">Letzte Laserbehandlung der betreffenden Hautstelle (Monate zurück)</label><input id="laser" placeholder="Optional"><label for="coverup">Cover-up / Überarbeitung / Narben oder Besonderheiten an der Stelle</label><textarea id="coverup"></textarea><label for="other">Weitere Anmerkungen und individuelle Hinweise</label><textarea id="other"></textarea></div></section>
+<section class="step"><h2>05 · Aufklärung & Einwilligung</h2><div class="card"><h3>Risiken und Hinweise aus der bisherigen EVE – sprachlich überarbeitet</h3><ol><li>Beim Tätowieren werden Farbpigmente mittels Nadeln in die Dermis eingebracht; dabei wird die Haut verletzt.</li>
+<li>Die Farbe kann durch Sonne, Solarium, Sonnenbrand und Hautveränderungen verblassen oder sich verändern; Pflege und UV-Schutz sind wichtig.</li>
+<li>Mögliche Folgen sind Kreislaufprobleme, Schüttelfrost, Nachbluten, Anschwellen, Rötungen, Narben, ungewollte Farbverläufe (Blow-outs), Photosensitivität, Farbverlust und Fremdkörperreaktionen. Bei anhaltenden oder starken Beschwerden ärztlichen Rat einholen.</li>
+<li>Cover-ups und Überarbeitungen können besondere Einschränkungen haben; die alte Tätowierung kann sichtbar bleiben und mehrere Sitzungen nötig machen.</li>
+<li>Eine Entfernung oder Aufhellung ist aufwendig, teuer und nicht garantiert; sie kann Hautveränderungen hinterlassen.</li>
+<li>Körperstellen mit Bewegung, Druck oder Reibung können schwieriger abheilen und das Ergebnis beeinflussen.</li>
+<li>Hautbeschaffenheit, Narben, Dehnungsstreifen und Pigmentaufnahme können das ästhetische Ergebnis beeinflussen.</li></ol><p>Zusätzlich bestehen allgemeine Risiken wie Schmerzen, Blutungen, Entzündungen, Infektionen, allergische Reaktionen, Narbenbildung und unerwartete Farb- oder Hautreaktionen.</p><h3>Nachsorge</h3><p>Die Nachsorge wurde persönlich besprochen. Die tätowierte Haut ist entsprechend den ausgehändigten Pflegehinweisen zu behandeln. Bei starken oder anhaltenden Beschwerden ist medizinischer Rat einzuholen.</p><label class="tick"><input id="truth" type="checkbox">Ich habe die Angaben wahrheitsgemäß und vollständig nach bestem Wissen gemacht. *</label><label class="tick"><input id="risk" type="checkbox">Ich habe die Aufklärung über Ablauf, mögliche Risiken, Besonderheiten und mögliche Folgen verstanden und konnte Fragen stellen. *</label><label class="tick"><input id="care" type="checkbox">Ich habe die Nachsorgehinweise erhalten und verstanden. *</label><label class="tick"><input id="healthy" type="checkbox">Ich fühle mich aktuell in der Lage, diese Entscheidung eigenständig zu treffen. *</label><label class="tick"><input id="consent" type="checkbox">Ich willige in die oben beschriebene Tätowierung ein. *</label></div></section>
+<section class="step"><h2>06 · Datenschutz & Fotos</h2><div class="card"><h3>Umgang mit Daten</h3><details><summary>Datenschutzinformationen anzeigen · DS-2026-11-24-ENTWURF-1</summary><p>Verantwortlichkeit (Entwurf): Bluthandwerk Tätowierungen, Klüser & Klüser GbR, Vogelsangerstr. 84, 50823 Köln, Kontakt: lukewtf@web.de. Die Tätowierung erfolgt durch selbstständige Tätowierer. Die datenschutzrechtliche Rollenverteilung und deren vollständige Kontaktdaten sind vor Freigabe zu klären.</p><p>Zwecke: Termin- und Vertragsabwicklung, sichere Durchführung der Tätowierung, Dokumentation und gegebenenfalls Rechtsverteidigung. Vertragsdaten: Art. 6 Abs. 1 lit. b DSGVO; Gesundheitsdaten: ausdrückliche Einwilligung nach Art. 9 Abs. 2 lit. a und Art. 6 Abs. 1 lit. a DSGVO. Rechtsansprüche können im erforderlichen Einzelfall nach Art. 9 Abs. 2 lit. f und Art. 6 Abs. 1 lit. f DSGVO verarbeitet werden.</p><p>Empfänger: zuständige berechtigte Studioangehörige und technische Dienstleister (Supabase, GitHub Pages). Verträge, Übermittlungen und Empfängerdetails sind vor Freigabe zu prüfen.</p><p>Aufbewahrung: Eine zehnjährige Aufbewahrung abgeschlossener EVE ist als Studiowunsch vorgesehen, nicht als gesetzliche Pflicht festgestellt. Erforderlichkeit, Löschfristen und Ausnahmen sind vor Freigabe festzulegen.</p><p>Rechte: Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und gegebenenfalls Widerspruch sowie Beschwerde bei der LDI NRW. Einwilligungen können jederzeit mit Wirkung für die Zukunft über die genannte Kontaktadresse widerrufen werden. Die bisherige rechtmäßige Verarbeitung bleibt unberührt. Ohne erforderliche Gesundheitsangaben kann die Tätowierung aus Sicherheitsgründen gegebenenfalls nicht durchgeführt werden.</p></details><p class="notice">Entwurf – ausschließlich Testdaten. Zuständiger Tätowierer: siehe Feld Tätowierer/in in den Tattoo-Angaben.</p><label class="tick"><input id="privacy" type="checkbox">Ich habe die Datenschutzinformationen (Entwurf) zur Kenntnis genommen. *</label><label class="tick"><input id="healthConsent" type="checkbox">Ich willige ausdrücklich ein, dass meine angegebenen Gesundheitsdaten zur Beurteilung der sicheren Durchführung und Dokumentation meiner Tätowierung verarbeitet werden. Ich kann diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. *</label><h3>Freiwillige Veröffentlichung von Fotos</h3><p>Eine Veröffentlichung ist für die Tätowierung nicht erforderlich. Die Entscheidung ist unabhängig von der Tattoo-Einwilligung.</p><label class="tick"><input type="radio" name="photo" value="Nein" checked> Nein, ich möchte keine Veröffentlichung.</label><label class="tick"><input type="radio" name="photo" value="Gesonderte Freigabe gewünscht"> Ich möchte eine separate Foto-/Social-Media-Freigabe besprechen.</label><p class="muted">Die zweite Auswahl ist noch keine rechtswirksame Fotoveröffentlichungs-Einwilligung.</p></div></section>
+<section class="step"><h2>07 · Unterschrift & PDF</h2><div class="card"><p>Bitte Angaben prüfen und mit Finger oder Apple Pencil unterschreiben.</p><label for="signName">Name der unterzeichnenden Person *</label><input id="signName" required><label>Unterschrift *</label><div class="signature"><canvas id="signature"></canvas><div class="sign-note">Hier unterschreiben</div></div><div class="actions"><button type="button" class="secondary" id="clear">Unterschrift löschen</button></div><label class="tick"><input id="reviewed" type="checkbox">Ich habe alle Angaben und Erklärungen geprüft. *</label><p class="muted">Über „PDF erstellen / Drucken“ wird nichts online gespeichert. Die separate Supabase-Speicherfunktion ist ausschließlich für Testdaten vorgesehen. Es gibt noch keine manipulationssichere elektronische Signatur oder freigegebene sichere Archivierung.</p></div></section>
+<div id="error" class="error" role="alert"></div><div class="actions"><button type="button" id="back" class="secondary" hidden>← Zurück</button><button type="button" id="next">Weiter →</button><button type="button" id="print" hidden>PDF erstellen / Drucken</button><button type="button" id="saveEvePdf" class="secondary" hidden>Test-PDF in Supabase speichern</button><button type="button" id="newSheetButton" class="secondary" hidden>Neuer Bogen</button></div></form><p class="muted small">PROTOTYP · Keine echten Gesundheits- oder Kundendaten eingeben, bis Datenschutz und sichere Abläufe geklärt sind. Keine verbindliche Rechtsprüfung.</p></main><article id="printable"></article><script>
+const $=id=>document.getElementById(id);const steps=[...document.querySelectorAll('.step')];let step=0,hasInk=false;const keys=["blood", "skin", "thinners", "allergies", "herpes", "infections", "meds", "illness", "alcohol", "recentmeds", "capacity", "surgery", "sarcoid", "uv", "pregnancy", "nursing"];const questionTexts=["Bluterkrankung oder erhöhte Blutungsneigung?", "Hauterkrankungen (z. B. Neurodermitis)?", "Blutverdünnende Medikamente (z. B. Marcumar, Aspirin, Heparin) eingenommen?", "Allergien?", "Häufiger Herpes?", "Infektionskrankheiten (Hepatitis, HIV, MRSA etc.)?", "In den letzten 7 Tagen Medikamente eingenommen?", "Sonstige chronische oder akute Krankheiten?", "In den letzten 24 Stunden Alkohol und/oder andere Betäubungsmittel konsumiert?", "In den letzten 24 Stunden blutverdünnende Medikamente appliziert?", "Beeinträchtigungen der Willensbildungs- oder Urteilsfähigkeit?", "Im zu tätowierenden Bereich chirurgische Eingriffe oder Strahlenbehandlungen vorgenommen?", "Neigung zu Heilbildung einer Sarkoidose? (Formulierung aus der Vorlage – fachlich prüfen)", "In den vergangenen 4 Monaten mehr als üblich vorkommendem Maß UV-Strahlung ausgesetzt?", "Besteht eine Schwangerschaft? (falls zutreffend)", "Wird gestillt? (falls zutreffend)"];const riskTexts=["Beim Tätowieren werden Farbpigmente mittels Nadeln in die Dermis eingebracht; dabei wird die Haut verletzt.", "Die Farbe kann durch Sonne, Solarium, Sonnenbrand und Hautveränderungen verblassen oder sich verändern; Pflege und UV-Schutz sind wichtig.", "Mögliche Folgen sind Kreislaufprobleme, Schüttelfrost, Nachbluten, Anschwellen, Rötungen, Narben, ungewollte Farbverläufe (Blow-outs), Photosensitivität, Farbverlust und Fremdkörperreaktionen. Bei anhaltenden oder starken Beschwerden ärztlichen Rat einholen.", "Cover-ups und Überarbeitungen können besondere Einschränkungen haben; die alte Tätowierung kann sichtbar bleiben und mehrere Sitzungen nötig machen.", "Eine Entfernung oder Aufhellung ist aufwendig, teuer und nicht garantiert; sie kann Hautveränderungen hinterlassen.", "Körperstellen mit Bewegung, Druck oder Reibung können schwieriger abheilen und das Ergebnis beeinflussen.", "Hautbeschaffenheit, Narben, Dehnungsstreifen und Pigmentaufnahme können das ästhetische Ergebnis beeinflussen."];function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===step));$('bar').style.width=((step+1)/steps.length*100)+'%';$('counter').textContent=`Schritt ${step+1} von ${steps.length}`;$('back').hidden=step===0;$('next').hidden=step===steps.length-1;$('print').hidden=step!==steps.length-1;$('saveEvePdf').hidden=step!==steps.length-1;$('newSheetButton').hidden=step!==steps.length-1;$('error').textContent='';$('error').style.color='';if(step===steps.length-1)requestAnimationFrame(resizeCanvas);scrollTo(0,0)}function valid(){if(step===0){for(const id of ['first','last','birth','street','house','zip','city','date','artist','placement','motif'])if(!$(id).value.trim()){ $(id).focus();return 'Bitte alle Pflichtfelder ausfüllen.'}const b=new Date($('birth').value+'T12:00:00'),t=new Date($('date').value+'T12:00:00');let age=t.getFullYear()-b.getFullYear()-(t.getMonth()<b.getMonth()||(t.getMonth()===b.getMonth()&&t.getDate()<b.getDate())?1:0);if(age<18)return 'Diese Version ist nur für Volljährige vorgesehen.'}if(step===1){for(const key of keys)if(!document.querySelector(`input[name="q_${key}"]:checked`))return 'Bitte alle Gesundheitsfragen beantworten.'}if(step===3&&!['truth','risk','care','healthy','consent'].every(id=>$(id).checked))return 'Bitte alle Pflichtbestätigungen auswählen.';if(step===4&&(!$('privacy').checked||!$('healthConsent').checked))return 'Bitte Datenschutzinformationen und Gesundheitsdaten-Einwilligung bestätigen.';if(step===5&&(!$('signName').value.trim()||!hasInk||!$('reviewed').checked))return 'Bitte Name, Unterschrift und Bestätigung ergänzen.';return ''}$('next').onclick=()=>{const e=valid();if(e){$('error').textContent=e;$('error').scrollIntoView({block:'center'});return}step++;show()};$('back').onclick=()=>{step--;show()};const canvas=$('signature'),ctx=canvas.getContext('2d');function resizeCanvas(){if(canvas.width)return;const r=canvas.getBoundingClientRect(),d=devicePixelRatio||1;canvas.width=Math.max(1,Math.round(r.width*d));canvas.height=Math.round(190*d);ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#fff';ctx.fillRect(0,0,r.width,190);ctx.strokeStyle='#111';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round'}let drawing=false;function pos(e){const r=canvas.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}canvas.addEventListener('pointerdown',e=>{e.preventDefault();canvas.setPointerCapture(e.pointerId);drawing=true;const[x,y]=pos(e);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+.1,y+.1);ctx.stroke();hasInk=true});canvas.addEventListener('pointermove',e=>{if(!drawing)return;e.preventDefault();const[x,y]=pos(e);ctx.lineTo(x,y);ctx.stroke()});canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);$('clear').onclick=()=>{ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);hasInk=false};function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function line(k,v){return `<p class="line"><strong>${esc(k)}:</strong> ${esc(v||'—')}</p>`}const fields=[['Vorname','first'],['Nachname','last'],['Geburtsdatum','birth'],['Geburtsort','birthplace'],['Straße','street'],['Hausnummer','house'],['PLZ','zip'],['Wohnort','city'],['Land','country'],['Bundesland','state'],['Telefon','phone'],['E-Mail','email'],['Tattoo-Datum','date'],['Studio','studio'],['Tätowierer/in','artist'],['Körperstelle','placement'],['Motiv','motif']];function buildEvePrintable(){const e=valid();if(e){$('error').textContent=e;return false}const health=keys.map((k,i)=>line(questionTexts[i],document.querySelector(`input[name="q_${k}"]:checked`).value+(document.querySelector(`[name="detail_${k}"]`)?.value?' · '+document.querySelector(`[name="detail_${k}"]`).value:''))).join('');$('printable').innerHTML=`<img class="logo" src="studio-logo.jpg" alt="Logo"><h1>Bluthandwerk Tätowierungen</h1><p>Tattoo Kollektiv · Einverständniserklärung · Entwurf</p><h2>Persönliche Angaben und Tattoo</h2>${fields.map(([label,id])=>line(label,$(id).value)).join('')}<h2>Gesundheitsangaben</h2>${health}${line('Weitere Gesundheitsangaben',$('healthNotes').value)}<h2>Besondere Umstände</h2>${[['Alter der Farben','colorAge'],['Letzte Laserbehandlung','laser'],['Cover-up / Besonderheiten','coverup'],['Weitere Anmerkungen','other']].map(([l,id])=>line(l,$(id).value)).join('')}<h2>Aufklärung und Einwilligung</h2><ol>${riskTexts.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p>Weitere Risiken: Schmerzen, Blutungen, Entzündungen, Infektionen, Allergien, Narben und unerwartete Haut- oder Farbreaktionen. Persönliche Aufklärung und Nachsorge wurden bestätigt. Die Person hat freiwillig in die Tätowierung eingewilligt und die Angaben nach bestem Wissen gemacht.</p><h2>Datenschutz und Foto</h2><p>Datenschutzversion: DS-2026-11-24-ENTWURF-1. Ich habe die Datenschutzinformationen (Entwurf) zur Kenntnis genommen. Ich willige ausdrücklich ein, dass meine angegebenen Gesundheitsdaten zur Beurteilung der sicheren Durchführung und Dokumentation meiner Tätowierung verarbeitet werden. Ich kann diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Verantwortlichkeit (Entwurf): Bluthandwerk Tätowierungen, Klüser & Klüser GbR, Vogelsangerstr. 84, 50823 Köln, Kontakt: lukewtf@web.de. Die Tätowierung erfolgt durch selbstständige Tätowierer. Die datenschutzrechtliche Rollenverteilung und deren vollständige Kontaktdaten sind vor Freigabe zu klären. Zwecke: Termin- und Vertragsabwicklung, sichere Durchführung der Tätowierung, Dokumentation und gegebenenfalls Rechtsverteidigung. Vertragsdaten: Art. 6 Abs. 1 lit. b DSGVO; Gesundheitsdaten: ausdrückliche Einwilligung nach Art. 9 Abs. 2 lit. a und Art. 6 Abs. 1 lit. a DSGVO. Rechtsansprüche können im erforderlichen Einzelfall nach Art. 9 Abs. 2 lit. f und Art. 6 Abs. 1 lit. f DSGVO verarbeitet werden. Empfänger: zuständige berechtigte Studioangehörige und technische Dienstleister (Supabase, GitHub Pages). Verträge, Übermittlungen und Empfängerdetails sind vor Freigabe zu prüfen. Aufbewahrung: Eine zehnjährige Aufbewahrung abgeschlossener EVE ist als Studiowunsch vorgesehen, nicht als gesetzliche Pflicht festgestellt. Erforderlichkeit, Löschfristen und Ausnahmen sind vor Freigabe festzulegen. Rechte: Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und gegebenenfalls Widerspruch sowie Beschwerde bei der LDI NRW. Einwilligungen können jederzeit mit Wirkung für die Zukunft über die genannte Kontaktadresse widerrufen werden. Die bisherige rechtmäßige Verarbeitung bleibt unberührt. Ohne erforderliche Gesundheitsangaben kann die Tätowierung aus Sicherheitsgründen gegebenenfalls nicht durchgeführt werden.</p>${line('Fotoveröffentlichung',document.querySelector('input[name="photo"]:checked').value)}<h2>Unterschrift</h2>${line('Unterzeichnende Person',$('signName').value)}<img class="sig" src="${canvas.toDataURL('image/png')}" alt="Unterschrift"><p>Erstellt am ${new Date().toLocaleString('de-DE')}</p><p class="notice"><strong>PROTOTYP / ENTWURF:</strong> Nicht als rechtlich geprüftes Studioformular verwenden. Datenschutz, Gesundheitsdaten, Aufbewahrung, Nachweis der Einwilligung und Signaturprozess müssen vor echtem Einsatz geprüft werden.</p>`;return true};$('print').onclick=()=>{if(buildEvePrintable())window.print()};$('newSheetButton').onclick=()=>{if(!confirm('Alle eingegebenen Daten löschen?'))return;$('form').reset();canvas.width=0;hasInk=false;step=0;show()};// Kundenübernahme direkt aufrufen, damit die Felder zuverlässig befüllt werden.
+function fillEveFromCustomer(c){
+  if(!c)return false;
+  $('form').reset();
+  canvas.width=0;hasInk=false;step=0;show();
+  const values={first:c.first_name||'',last:c.last_name||'',email:c.email||'',phone:c.phone||''};
+  for(const [id,value] of Object.entries(values)){
+    const field=$(id);
+    if(!field)return false;
+    field.value=value;
+    field.dispatchEvent(new Event('input',{bubbles:true}));
+    field.dispatchEvent(new Event('change',{bubbles:true}));
+  }
+  const d=new Date();
+  $('date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return $('first').value===values.first && $('last').value===values.last;
+}
+window.bluthandwerkFillEveFromCustomer=fillEveFromCustomer;
+document.addEventListener('eve-open-customer',e=>fillEveFromCustomer(e.detail));document.addEventListener('eve-clear-customer',()=>{});const now=new Date();$('date').value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;show();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script><script src="https://cdn.jsdelivr.net/npm/jspdf@3.0.3/dist/jspdf.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+async function createCompleteEvePdf(){
+  const doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+  const source=document.getElementById('printable');
+  let y=15; const left=15, width=180, bottom=280;
+  function space(h){if(y+h>bottom){doc.addPage();y=15;}}
+  function write(text,size=10,bold=false){
+    doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);
+    const height=size*0.45+1;
+    const lines=doc.splitTextToSize(String(text),width);
+    for(const line of lines){space(height);doc.text(line,left,y+size*0.35);y+=height;}
+    y+=2;
+  }
+  async function imageData(img){
+    const loaded=new Image();loaded.src=img.src;await loaded.decode();
+    const c=document.createElement('canvas');c.width=loaded.naturalWidth;c.height=loaded.naturalHeight;
+    c.getContext('2d').drawImage(loaded,0,0);return {data:c.toDataURL('image/png'),ratio:c.width/c.height};
+  }
+  for(const node of source.children){
+    const tag=node.tagName;
+    if(tag==='IMG'){
+      const im=await imageData(node);const maxW=node.classList.contains('logo')?25:85;
+      const maxH=node.classList.contains('logo')?25:35;
+      const w=Math.min(maxW,maxH*im.ratio),h=w/im.ratio;
+      space(h+4);doc.addImage(im.data,'PNG',left,y,w,h);y+=h+4;
+    }else if(tag==='H1'||tag==='H2'){
+      space(24);y+=2;write(node.textContent,tag==='H1'?17:13,true);
+    }else if(tag==='OL'){
+      [...node.children].forEach((li,i)=>write((i+1)+'. '+li.textContent));
+    }else{write(node.textContent,10,false);}
+  }
+  const pages=doc.getNumberOfPages();
+  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('Bluthandwerk EVE · Testdokument · '+i+' / '+pages,15,290);}
+  return doc.output('blob');
+}
+</script><script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script><script id="staff-auth-script">
+(()=>{
+  // Nur Project URL und Publishable/anon Key eintragen. NIEMALS service_role oder secret key.
+  const SUPABASE_URL = 'https://oaprbdojvqbenelctozk.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_MLe5BdRSwG6TvHsYxEfl9Q_p4Gn8dpW';
+  const el=id=>document.getElementById(id);
+  const msg=(text)=>{el('authMessage').textContent=text};
+  const configured=SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('EINTRAGEN') && !SUPABASE_PUBLISHABLE_KEY.includes('EINTRAGEN');
+  const url=new URL(location.href);
+  if(location.hash.startsWith('#eve-qr=')){
+    const token=location.hash.slice(8);
+    history.replaceState(null,'',location.pathname+'?customer=1');
+    const main=document.querySelector('main');
+    for(const node of document.querySelectorAll('#staffAuth,#teamArea,#customerArea,#eveLinkBanner,#staffAgreement'))node.remove();
+    main.hidden=true;
+    const notice=document.createElement('p');notice.style.padding='24px';notice.setAttribute('role','status');notice.textContent='QR-Zugang wird geprüft …';document.body.prepend(notice);
+    const style=document.createElement('style');style.textContent='main[hidden]{display:none!important} #print,#saveEvePdf,#newSheetButton{display:none!important}';document.head.append(style);
+    const finish=document.createElement('button');finish.type='button';finish.textContent='Einverständniserklärung absenden (Test)';finish.hidden=true;el('print').after(finish);
+    const sync=()=>{finish.hidden=step!==steps.length-1};el('next').addEventListener('click',sync);el('back').addEventListener('click',sync);
+    let submissionEnabled=false, submitted=false, uncertain=false;
+    let strokes=[], activeStroke=null;
+    function point(e){const r=canvas.getBoundingClientRect();return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];}
+    canvas.addEventListener('pointerdown',e=>{activeStroke=[point(e)];strokes.push(activeStroke);});
+    canvas.addEventListener('pointermove',e=>{if(activeStroke)activeStroke.push(point(e));});
+    for(const event of ['pointerup','pointercancel'])canvas.addEventListener(event,()=>{activeStroke=null;});
+    el('clear').addEventListener('click',()=>{strokes=[];activeStroke=null;});
+    finish.onclick=async()=>{
+      if(!submissionEnabled||submitted||uncertain)return;
+      const original=step;
+      try {
+        for(let i=0;i<steps.length;i++){step=i;const error=valid();if(error){show();sync();el('error').textContent=error;return;}}
+      }finally{if(step===steps.length)step=original;}
+      step=original;
+      finish.disabled=true;el('back').disabled=true;el('error').textContent='Test-PDF wird erstellt …';
+      try{
+        const values=Object.fromEntries([...fields.map(x=>x[1]),'healthNotes','colorAge','laser','coverup','other','signName'].map(id=>[id,el(id).value]));
+        const health=Object.fromEntries(keys.map(k=>[k,{answer:document.querySelector(`input[name="q_${k}"]:checked`).value,detail:document.querySelector(`[name="detail_${k}"]`).value}]));
+        const confirmations=Object.fromEntries(['truth','risk','care','healthy','consent','privacy','reviewed','healthConsent'].map(k=>[k,el(k).checked]));
+        const photo=document.querySelector('input[name="photo"]:checked').value;
+        el('error').textContent='Formulardaten werden übermittelt …';
+        uncertain=true;
+        const response=await fetch(SUPABASE_URL+'/functions/v1/submit-eve-v2',{method:'POST',headers:{'Content-Type':'application/json',apikey:SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({token,action:'submit',version:'QR12',privacyVersion:'DS-2026-11-24-ENTWURF-1',values,health,confirmations,photo,strokes})});
+        const result=await response.json();
+        if(!response.ok||result.success!==true){el('error').textContent=(response.status===400&&result.error==='Formulardaten ungültig'?'Formulardaten abgelehnt. Bitte Geburtsdatum (Volljährigkeit), Tattoo-Datum, Pflichtfelder, Gesundheitsfragen und Unterschrift prüfen.':'Übermittlung nicht bestätigt (HTTP '+response.status+').')+' Bitte im Studio prüfen lassen. Nicht erneut absenden.';return;}
+        submitted=true;uncertain=false;
+        main.hidden=true;document.getElementById('form').reset();strokes=[];canvas.width=0;hasInk=false;
+        notice.textContent='Test-EVE erfolgreich übermittelt. Bitte im Studio die Kundenakte prüfen lassen.';
+      }catch{el('error').textContent=uncertain?'Übermittlung unklar. Bitte im Studio prüfen lassen. Nicht erneut absenden.':'PDF-Erstellung fehlgeschlagen. Bitte erneut versuchen.';}
+      finally{el('printable').replaceChildren();finish.disabled=submitted||uncertain||!submissionEnabled;el('back').disabled=submitted||uncertain;}
+    };
+    if(!/^[a-f0-9]{64}$/.test(token)){notice.textContent='Ungültiger QR-Code.';return;}
+    fetch(SUPABASE_URL+'/functions/v1/submit-eve-v2',{method:'POST',headers:{'Content-Type':'application/json',apikey:SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({token})}).then(async response=>{const data=await response.json();if(!response.ok||data.valid!==true)throw Error('invalid');submissionEnabled=data.submission_enabled===true;finish.disabled=!submissionEnabled;notice.textContent=submissionEnabled?'Kundenansicht · Online-Speichertest. Ausschließlich fiktive Daten eingeben.':'Kundenansicht · Übermittlung deaktiviert.';main.hidden=false;sync();}).catch(()=>{notice.textContent='QR-Zugang ungültig, abgelaufen oder nicht erreichbar. Bitte im Studio einen neuen Code anfordern.';});
+    return;
+  }
+  if(url.searchParams.has('customer')){document.body.replaceChildren();const notice=document.createElement('p');notice.textContent='Bitte den QR-Code erneut scannen.';document.body.append(notice);return;}
+  const recoveryHint=url.searchParams.get('type')==='recovery'||new URLSearchParams(location.hash.slice(1)).get('type')==='recovery';
+  if(recoveryHint)document.body.classList.add('recovery-mode');
+  if(!configured){msg('Noch nicht verbunden: Supabase Project URL und Publishable Key fehlen. Keine echten Kundendaten eingeben.');return}
+  if(!window.supabase?.createClient){msg('Supabase-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen.');return}
+  const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}});
+  const customerArea=el('customerArea'),customerForm=el('customerForm'),customerList=el('customerList');
+  let staffUserId=null,customerEditingId=null,customers=[],customerRequest=0;
+  let eveSelectedCustomerId=null;
+  const savePdfButton=el('saveEvePdf');
+  let staffStrokes=[], staffStroke=null, staffPointer=null, saving=false, blocked=false;
+  function resetStaffSignature(){staffStrokes=[];staffStroke=null;staffPointer=null;}
+  function staffPoint(e){const r=canvas.getBoundingClientRect();return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];}
+  canvas.addEventListener('pointerdown',e=>{if(staffPointer!==null)return;staffPointer=e.pointerId;staffStroke=[staffPoint(e)];staffStrokes.push(staffStroke);});
+  canvas.addEventListener('pointermove',e=>{if(staffStroke&&staffPointer===e.pointerId)staffStroke.push(staffPoint(e));});
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,e=>{if(staffPointer===e.pointerId){staffStroke=null;staffPointer=null;}});
+  el('clear').addEventListener('click',resetStaffSignature);
+  el('form').addEventListener('reset',resetStaffSignature);
+  savePdfButton.textContent='EVE serverseitig speichern (Test)';
+  savePdfButton.addEventListener('click',async()=>{
+    if(saving||blocked)return;
+    if(!staffUserId||!eveSelectedCustomerId){el('error').textContent='Bitte zuerst einen Testkunden über „EVE öffnen“ auswählen.';return;}
+    const original=step;
+    for(let i=0;i<steps.length;i++){step=i;const error=valid();if(error){show();el('error').textContent=error;return;}}
+    step=original;
+    if(!confirm('NUR TESTDATEN: EVE serverseitig speichern?'))return;
+    const uid=staffUserId, customerId=eveSelectedCustomerId;
+    saving=true;savePdfButton.disabled=true;
+    const oldLabel=savePdfButton.textContent;let sent=false;
+    try{
+      const values=Object.fromEntries([...fields.map(x=>x[1]),'healthNotes','colorAge','laser','coverup','other','signName'].map(id=>[id,el(id).value]));
+      const health=Object.fromEntries(keys.map(k=>[k,{answer:document.querySelector(`input[name="q_${k}"]:checked`).value,detail:document.querySelector(`[name="detail_${k}"]`).value}]));
+      const confirmations=Object.fromEntries(['truth','risk','care','healthy','consent','privacy','reviewed','healthConsent'].map(k=>[k,el(k).checked]));
+      const photo=document.querySelector('input[name="photo"]:checked').value;
+      const strokes=JSON.parse(JSON.stringify(staffStrokes));
+      const {data:{user},error:userError}=await client.auth.getUser();
+      if(userError||user?.id!==uid||staffUserId!==uid||eveSelectedCustomerId!==customerId)throw Error('Mitarbeiteranmeldung oder Kundenauswahl geändert.');
+      if(await rpc('can_access_customer',{p_customer_id:customerId})!==true)throw Error('Kundenfreigabe fehlt.');
+       const {data:token,error}=await client.rpc('create_eve_qr',{p_customer_id:customerId});
+      if(error||typeof token!=='string'||! /^[a-f0-9]{64}$/.test(token))throw Error('Speicherzugang konnte nicht erstellt werden.');
+      if(staffUserId!==uid||eveSelectedCustomerId!==customerId)throw Error('Kundenauswahl geändert.');
+      savePdfButton.textContent='Server erstellt PDF …';sent=true;
+      const response=await fetch(SUPABASE_URL+'/functions/v1/submit-eve-v2',{method:'POST',headers:{'Content-Type':'application/json',apikey:SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({token,action:'submit',version:'QR12',privacyVersion:'DS-2026-11-24-ENTWURF-1',values,health,confirmations,photo,strokes})});
+      const result=await response.json();
+      if(!response.ok||result.success!==true)throw Error((response.status===400&&result.error==='Formulardaten ungültig'?'Formulardaten abgelehnt. Bitte Geburtsdatum (Volljährigkeit), Tattoo-Datum, Pflichtfelder, Gesundheitsfragen und Unterschrift prüfen.':'Übermittlung nicht bestätigt (HTTP '+response.status+').'));
+      blocked=true;el('error').style.color='#b8f2c3';el('error').textContent='Test-EVE erfolgreich gespeichert. Bitte Kundenakte prüfen. Für einen neuen Bogen erneut einen Kunden auswählen.';
+    }catch(err){if(sent)blocked=true;el('error').style.color='#ffb5b5';el('error').textContent=err.message+(sent?' Bitte Kundenakte prüfen, nicht erneut absenden.':'');}
+    finally{saving=false;savePdfButton.disabled=blocked;savePdfButton.textContent=oldLabel;el('error').scrollIntoView({block:'center'});}
+  });
+  function clearEveSelection(){el("form").reset();canvas.width=0;hasInk=false;step=0;show();el("printable").replaceChildren();eveSelectedCustomerId=null;resetStaffSignature();el('eveLinkBanner').hidden=true;el('eveLinkName').textContent=''}
+  function openEveForCustomer(customer){
+    if(!staffUserId||saving)return;
+    if(!confirm('EVE-Testbogen für '+customer.first_name+' '+customer.last_name+' öffnen? Bisherige Formulareingaben werden verworfen.'))return;
+    const details={first_name:customer.first_name,last_name:customer.last_name,email:customer.email||'',phone:customer.phone||''};
+    const filled=typeof window.bluthandwerkFillEveFromCustomer==='function'
+      ? window.bluthandwerkFillEveFromCustomer(details)
+      : false;
+    if(!filled){
+      alert('Die Kundendaten konnten nicht in die EVE übernommen werden. Bitte Seite neu laden.');
+      return;
+    }
+    blocked=false;savePdfButton.disabled=false;
+    eveSelectedCustomerId=customer.id;
+    el('eveLinkName').textContent=customer.first_name+' '+customer.last_name;
+    el('eveLinkBanner').hidden=false;
+    el('eveLinkBanner').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  el('eveLinkClear').addEventListener('click',()=>{clearEveSelection();document.dispatchEvent(new Event('eve-clear-customer'))});
+
+  const customerStatus=t=>{el('customerStatus').textContent=t};
+  function clearCustomers(){staffCheckEpoch++;agreementSession=null;el("staffAgreement").hidden=true;document.querySelector("main").hidden=true;resetAgreement();clearTeam();clearEveSelection();document.dispatchEvent(new Event('eve-clear-customer'));staffUserId=null;el("customerSearch").value="";customers=[];customerRequest++;customerArea.hidden=true;customerList.replaceChildren();customerForm.hidden=true;customerForm.reset();customerEditingId=null}
+  function openCustomerForm(customer=null){el("customerEmail").readOnly=!!customer;customerEditingId=customer?.id||null;customerForm.reset();el('customerFormTitle').textContent=customer?'Kunden bearbeiten':'Kunden anlegen';if(customer){el('customerFirst').value=customer.first_name;el('customerLast').value=customer.last_name;el('customerEmail').value=customer.email||'';el('customerPhone').value=customer.phone||''}customerForm.hidden=false;el('customerFirst').focus()}
+  async function openCustomerRecord(c,panel){
+    if(!staffUserId)return;
+    const uid=staffUserId;
+    panel.replaceChildren();panel.hidden=false;
+    const note=document.createElement('p');note.textContent='Einverständniserklärungen werden geladen …';panel.append(note);
+    const valid=()=>staffUserId===uid&&panel.isConnected&&!panel.hidden;
+    try{
+      let {data,error}=await client.from('eve_documents').select('id,status,pdf_path,created_at').eq('customer_id',c.id).eq('status','submitted').order('created_at',{ascending:false,nullsFirst:false}).order('id').limit(1000);
+      if(error && error.code==='42703'){({data,error}=await client.from('eve_documents').select('id,status,pdf_path').eq('customer_id',c.id).eq('status','submitted').order('id').limit(1000));}
+      if(!valid())return;
+      if(error)throw error;
+      note.textContent=data.length?data.length+' freigegebene EVE-Dokumente'+(data.length===1000?' (maximal 1000 angezeigt)':''):'Keine abgeschlossenen, für dich freigegebenen Dokumente vorhanden.';
+      for(const d of data){
+        const line=document.createElement('div');line.className='customer-item';
+        const label=document.createElement('strong');label.textContent='Einverständniserklärung';line.append(label);
+        const date=document.createElement('p');date.className='muted';const stamp=d.created_at?new Date(d.created_at):null;date.textContent=stamp&&!Number.isNaN(stamp.getTime())?'Erstellt: '+new Intl.DateTimeFormat('de-DE',{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Berlin'}).format(stamp)+' Uhr':'Erstellungsdatum nicht verfügbar · '+d.id;line.append(date);
+        const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent='PDF herunterladen';line.append(b);panel.append(line);
+        const preview=document.createElement('button');preview.type='button';preview.className='secondary';preview.textContent='PDF ansehen';preview.style.marginRight='10px';line.insertBefore(preview,b);
+        if(teamAdmin===uid){
+          const manage=document.createElement('button');manage.type='button';manage.className='secondary';manage.textContent='Freigaben verwalten';manage.style.marginLeft='10px';line.append(manage);
+          const accessPanel=document.createElement('div');accessPanel.hidden=true;line.append(accessPanel);
+          const allowed=()=>valid()&&teamAdmin===uid&&!accessPanel.hidden;
+          async function loadAccess(){
+            accessPanel.replaceChildren();const status=document.createElement('p');status.textContent='Freigaben werden geladen …';accessPanel.append(status);
+            try{
+              const [team,access]=await Promise.all([client.from('studio_staff').select('user_id,display_name,role,active').order('display_name'),client.from('eve_access').select('staff_id').eq('document_id',d.id)]);
+              if(!allowed())return;if(team.error)throw team.error;if(access.error)throw access.error;
+              const granted=new Set(access.data.map(x=>x.staff_id));status.textContent='Zugriffsberechtigungen für dieses Dokument';
+              for(const member of team.data){
+                const row=document.createElement('div');row.style.cssText='padding:8px 0;border-top:1px solid #555';const text=document.createElement('p');text.textContent=(member.display_name||member.user_id)+' · '+(member.active?'Aktiv':'Inaktiv')+' · '+(granted.has(member.user_id)?'Freigegeben':'Nicht freigegeben');row.append(text);accessPanel.append(row);
+                if(member.user_id===uid){text.textContent+=' · Eigenes Konto';continue;}
+                const has=granted.has(member.user_id);const action=document.createElement('button');action.type='button';action.className='secondary';action.textContent=has?'Freigabe entziehen':'Freigeben';action.disabled=!has&&!member.active;row.append(action);
+                action.onclick=async()=>{if(!allowed()||!confirm(action.textContent+' für '+(member.display_name||'Mitarbeiter')+'?'))return;for(const btn of accessPanel.querySelectorAll('button'))btn.disabled=true;try{
+                  const result=has?await client.from('eve_access').delete().eq('document_id',d.id).eq('staff_id',member.user_id).select('staff_id').single():await client.from('eve_access').insert({document_id:d.id,staff_id:member.user_id}).select('staff_id').single();
+                  if(!allowed())return;if(result.error)throw result.error;await loadAccess();
+                }catch(e){if(allowed()){await loadAccess();if(allowed()){const msg=document.createElement('p');msg.textContent='Änderung fehlgeschlagen: '+e.message;accessPanel.prepend(msg);}}}};
+              }
+            }catch(e){if(allowed())status.textContent='Freigaben konnten nicht geladen werden: '+e.message;}
+          }
+          manage.onclick=()=>{if(!valid()||teamAdmin!==uid)return;accessPanel.hidden=!accessPanel.hidden;if(!accessPanel.hidden)loadAccess();else accessPanel.replaceChildren();};
+        }
+        preview.onclick=async()=>{
+          if(!valid())return;
+          const tab=window.open('about:blank','_blank');
+          if(!tab){note.textContent='Bitte Pop-ups erlauben oder PDF herunterladen.';return;}
+          tab.opener=null;preview.disabled=true;
+          let url;
+          try{
+            if(d.pdf_path!==d.id+'/eve.pdf')throw new Error('Ungültiger Dokumentpfad.');
+            const {data:blob,error}=await client.storage.from('eve-documents').download(d.pdf_path);
+            if(!valid()||tab.closed){tab.close();return;}
+            if(error)throw error;
+            url=URL.createObjectURL(new Blob([blob],{type:'application/pdf'}));
+            tab.location.replace(url);
+            const timer=setInterval(()=>{if(tab.closed||!valid()){clearInterval(timer);tab.close();URL.revokeObjectURL(url);}},1000);
+          }catch(e){tab.close();if(url)URL.revokeObjectURL(url);if(valid())note.textContent='PDF konnte nicht geöffnet werden: '+e.message;}
+          finally{preview.disabled=false;}
+        };
+        b.onclick=async()=>{
+          if(!valid())return;b.disabled=true;
+          try{
+            if(d.pdf_path!==d.id+'/eve.pdf')throw new Error('Ungültiger Dokumentpfad.');
+            const {data:blob,error}=await client.storage.from('eve-documents').download(d.pdf_path);
+            if(!valid())return;if(error)throw error;
+            const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='EVE-'+d.id+'.pdf';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+          }catch(e){if(valid())note.textContent='PDF konnte nicht geladen werden: '+e.message;}finally{b.disabled=false;}
+        };
+      }
+    }catch(e){if(valid())note.textContent='Kundenakte konnte nicht geladen werden: '+e.message;}
+  }
+  async function rpc(name,args={}){const r=await client.rpc(name,args);if(r.error)throw r.error;return r.data;}
+  function btn(label,fn){const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=label;b.style.marginRight='8px';b.onclick=async()=>{if(b.disabled)return;b.disabled=true;try{await fn();}catch(e){if(b.isConnected)alert(e.message||'Aktion fehlgeschlagen');}finally{b.disabled=false;}};return b;}
+  function paragraph(parent,t){const p=document.createElement('p');p.textContent=t;parent.append(p);return p;}
+  function duration(){const s=document.createElement('select');for(const [v,t] of [['24h','24 Stunden'],['7d','7 Tage'],['30d','30 Tage'],['permanent','Dauerhaft']])s.add(new Option(t,v));return s;}
+  async function loadCustomers(){const uid=staffUserId,seq=++customerRequest,q=el('customerSearch').value.trim();customerList.replaceChildren();customers=[];if(!uid)return;if(q.length<3){customerStatus('Bitte mindestens 3 Zeichen eingeben und Suchen drücken.');return;}customerStatus('Suche läuft …');try{const data=await rpc('search_customers',{p_search:q});if(uid!==staffUserId||seq!==customerRequest)return;customers=data||[];renderCustomers();customerStatus(customers.length?customers.length+' Treffer (max. 30)':'Keine Treffer oder Suchlimit erreicht.');}catch(e){if(uid===staffUserId&&seq===customerRequest)customerStatus(e.message);}}
+  function renderCustomers(){customerList.replaceChildren();for(const hit of customers){const item=document.createElement('div');item.className='customer-item';const name=document.createElement('strong');name.textContent=hit.first_name+' '+hit.last_name;item.append(name);paragraph(item,hit.has_access?'Freigabe vorhanden':'Keine Kundenfreigabe');const id=hit.customer_id,uid=staffUserId;const live=()=>uid===staffUserId&&item.isConnected;const dur=duration();if(!hit.has_access){item.append(dur,btn('Freigabe beim Admin anfragen',async()=>{await rpc('request_customer_access',{p_customer_id:id,p_duration:dur.value});if(live())paragraph(item,'Anfrage gespeichert.');}));paragraph(item,'Kundenbestätigung per E-Mail noch nicht verfügbar.');}else{item.append(btn('Kontaktdaten öffnen',async()=>{const rows=await rpc('get_customer_details',{p_customer_id:id});if(!live())return;if(!rows?.length)throw Error('Keine Kundendaten verfügbar');const c={...rows[0],id};const detail=document.createElement('div');paragraph(detail,[c.email,c.phone].filter(Boolean).join(' · ')||'Keine Kontaktdaten');detail.append(btn('Bearbeiten',async()=>{if(await rpc('can_access_customer',{p_customer_id:id})===true&&live())openCustomerForm(c);}),btn('EVE öffnen',async()=>{if(await rpc('can_access_customer',{p_customer_id:id})===true&&live())openEveForCustomer(c); }));const panel=document.createElement('div');panel.hidden=true;detail.append(btn('Kundenakte',async()=>{if(panel.hidden)await openCustomerRecord(c,panel);else{panel.hidden=true;panel.replaceChildren();}}));
+const qrButton=document.createElement('button');qrButton.type='button';qrButton.className='secondary';qrButton.textContent='QR-Code erstellen';qrButton.style.marginLeft='10px';const qrPanel=document.createElement('div');qrPanel.hidden=true;qrButton.onclick=async()=>{if(!staffUserId)return;if(!qrPanel.hidden){qrPanel.hidden=true;qrPanel.replaceChildren();return}if(typeof window.qrcode!=='function'){alert('QR-Bibliothek konnte nicht geladen werden.');return}const uid=staffUserId;qrButton.disabled=true;qrPanel.hidden=false;qrPanel.textContent='Test-QR wird erstellt …';try{if(await rpc('can_access_customer',{p_customer_id:c.id})!==true)throw Error('Kundenfreigabe fehlt.');const {data,error}=await client.rpc('create_eve_qr',{p_customer_id:c.id});if(uid!==staffUserId||!qrPanel.isConnected)return;if(error)throw error;if(typeof data!=='string'||! /^[a-f0-9]{64}$/i.test(data))throw new Error('Unerwartetes Tokenformat');const target=new URL(location.pathname,location.origin);target.searchParams.set("v","qr15");target.hash='eve-qr='+data;const code=window.qrcode(0,'M');code.addData(target.href);code.make();const canvas=document.createElement('canvas');const n=code.getModuleCount(),scale=5;canvas.width=canvas.height=(n+8)*scale;canvas.style.cssText='display:block;width:320px;max-width:100%;height:auto;aspect-ratio:1 / 1;touch-action:auto;image-rendering:pixelated;margin:12px auto;';const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#000';for(let r=0;r<n;r++)for(let col=0;col<n;col++)if(code.isDark(r,col))ctx.fillRect((col+4)*scale,(r+4)*scale,scale,scale);const note=document.createElement('p');note.textContent='Test-QR · Version QR15 · 30 Minuten gültig · einmalig verwendbar.';const qrImage=document.createElement('img');qrImage.src=canvas.toDataURL('image/png');qrImage.alt='QR-Code';qrImage.style.cssText='display:block;width:280px;max-width:100%;height:auto;aspect-ratio:1 / 1;object-fit:contain;margin:12px auto;image-rendering:pixelated;';qrPanel.replaceChildren(note,qrImage);setTimeout(()=>{qrPanel.replaceChildren();qrPanel.hidden=true},30*60*1000);}catch(e){if(uid===staffUserId&&qrPanel.isConnected)qrPanel.textContent='QR konnte nicht erstellt werden: '+e.message;}finally{qrButton.disabled=false;}};detail.append(qrButton,qrPanel,panel);item.replaceChildren(name,detail); }));}customerList.append(item);}}
+  el('customerSearch').addEventListener('input',()=>{customerRequest++;customers=[];customerList.replaceChildren();customerStatus('Zum Suchen bitte Suchen / aktualisieren drücken.');});
+  el('customerSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();loadCustomers();}});
+  el('customerRefresh').onclick=loadCustomers;el('customerNew').onclick=()=>openCustomerForm();el('customerCancel').onclick=()=>{customerForm.hidden=true;customerEditingId=null;customerForm.reset();};
+  customerForm.onsubmit=async e=>{e.preventDefault();const uid=staffUserId,id=customerEditingId;if(!uid)return;const b=el('customerSave');if(b.disabled)return;b.disabled=true;try{const args={p_first_name:el('customerFirst').value.trim(),p_last_name:el('customerLast').value.trim(),p_phone:el('customerPhone').value.trim()||null};const result=id?await rpc('update_customer_secure',{...args,p_customer_id:id}):await rpc('create_customer_secure',{...args,p_email:el('customerEmail').value.trim()||null});if(uid!==staffUserId)return;if(!result)throw Error('Speicherung nicht bestätigt');el('customerSearch').value=args.p_first_name+' '+args.p_last_name;customerForm.hidden=true;customerForm.reset();customerEditingId=null;await loadCustomers();}catch(e){if(uid===staffUserId)customerStatus(e.message);}finally{b.disabled=false;}};
+  const accessBox=document.createElement('section');accessBox.className='card';el('teamArea').append(accessBox);const accessTitle=document.createElement('h2');accessTitle.textContent='Kundenfreigaben und Protokoll';accessBox.append(accessTitle);const accessOutput=document.createElement('div');let accessEpoch=0;
+  async function adminView(kind){const uid=teamAdmin,epoch=++accessEpoch;accessOutput.replaceChildren();const live=()=>uid&&uid===teamAdmin&&epoch===accessEpoch;try{const data=await rpc(kind);if(!live())return;paragraph(accessOutput,data.length+' Einträge');for(const r of data){const p=document.createElement('div');p.className='customer-item';if(kind==='list_customer_access_requests'){paragraph(p,r.customer_name+' · '+r.staff_name+' · '+r.requested_duration);for(const yes of [true,false])p.append(btn(yes?'Genehmigen':'Ablehnen',async()=>{if(!live()||!confirm('Anfrage '+(yes?'genehmigen':'ablehnen')+'?'))return;await rpc('resolve_customer_access_request',{p_request_id:r.request_id,p_approved:yes});if(live())await adminView(kind);}));}else if(kind==='list_customer_access'){paragraph(p,r.customer_name+' · '+r.staff_name+' · '+r.access_status+' · '+(r.expires_at?new Date(r.expires_at).toLocaleString('de-DE'):'Unbefristet'));if(!r.revoked_at)p.append(btn('Alle Freigaben dieses Kunden für diesen Mitarbeiter widerrufen',async()=>{if(!live()||!confirm('Alle Kundenfreigaben für dieses Paar widerrufen?'))return;await rpc('revoke_customer_access',{p_customer_id:r.customer_id,p_staff_id:r.staff_id});if(live())await adminView(kind);}));}else paragraph(p,new Date(r.created_at).toLocaleString('de-DE')+' · '+r.action+' · '+(r.actor_name||'System')+' · Kunde: '+(r.customer_id||'—')+' · '+(r.target_staff_name||''));accessOutput.append(p);}}catch(e){if(live())paragraph(accessOutput,e.message);}}
+  for(const [label,kind] of [['Anfragen','list_customer_access_requests'],['Freigaben','list_customer_access'],['Protokoll','list_eve_audit_log']])accessBox.append(btn(label,()=>adminView(kind)));accessBox.append(accessOutput);
+  accessBox.append(btn('Kundenfreigabe erteilen',async()=>{const uid=teamAdmin,epoch=++accessEpoch;accessOutput.replaceChildren();const q=document.createElement('input');q.placeholder='Kundenname (mind. 3 Zeichen)';const results=document.createElement('div');accessOutput.append(q,btn('Kunden suchen',async()=>{const rows=await rpc('search_customers',{p_search:q.value.trim()});const team=await client.from('studio_staff').select('user_id,display_name,active').eq('active',true);if(team.error)throw team.error;if(uid!==teamAdmin||epoch!==accessEpoch)return;results.replaceChildren();for(const r of rows){const p=document.createElement('div');paragraph(p,r.first_name+' '+r.last_name);const member=document.createElement('select');for(const m of team.data)member.add(new Option(m.display_name,m.user_id));const d=duration();p.append(member,d,btn('Freigeben',async()=>{if(uid!==teamAdmin||epoch!==accessEpoch||!member.value||!confirm('Kundenfreigabe erteilen?'))return;await rpc('grant_customer_access',{p_customer_id:r.customer_id,p_staff_id:member.value,p_duration:d.value});if(uid===teamAdmin&&epoch===accessEpoch)await adminView('list_customer_access');}));results.append(p);}}),results);}));
+  let teamAdmin=null, teamVersion=0;
+  let agreementListEpoch=0;
+  const archive=document.createElement('section');
+  archive.style.cssText='border:1px solid #555;border-radius:10px;padding:14px;margin:16px 0';
+  const archiveTitle=document.createElement('h2');archiveTitle.textContent='Mitarbeiterverpflichtungen';
+  const archiveButton=document.createElement('button');archiveButton.type='button';archiveButton.textContent='Verpflichtungen laden';
+  const archiveStatus=document.createElement('p');archiveStatus.setAttribute('role','status');
+  const archiveList=document.createElement('div');archive.append(archiveTitle,archiveButton,archiveStatus,archiveList);el('teamArea').append(archive);
+  function clearArchive(){agreementListEpoch++;archiveList.replaceChildren();archiveStatus.textContent='';}
+  function signatureImage(strokes){const c=document.createElement('canvas');c.width=900;c.height=300;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.strokeStyle='#111';x.fillStyle='#111';x.lineWidth=3;x.lineCap='round';x.lineJoin='round';for(const a of strokes){if(!a.length)continue;x.beginPath();x.moveTo(a[0][0]*c.width,a[0][1]*c.height);for(const p of a.slice(1))x.lineTo(p[0]*c.width,p[1]*c.height);x.stroke();}c.style.cssText='width:100%;max-width:450px;background:white';return c;}
+  function exportAgreement(a){const d=new window.jspdf.jsPDF();let y=18;const line=t=>{for(const l of d.splitTextToSize(t,174)){if(y>277){d.addPage();y=18;}d.text(l,18,y);y+=5;}};d.setFontSize(11);line('Bluthandwerk Tätowierungen – Mitarbeiterverpflichtung');line('Name: '+a.signed_name);line('Konto-ID: '+a.user_id);line('Version: '+a.agreement_version);line('Unterzeichnet: '+new Date(a.accepted_at).toLocaleString('de-DE',{timeZone:'Europe/Berlin'})+' (Europe/Berlin)');y+=5;for(const t of a.agreement_text.split('\n'))line(t);if(y>210){d.addPage();y=18;}line('Gespeicherte Unterschrift:');d.addImage(signatureImage(a.signature_strokes).toDataURL('image/png'),'PNG',18,y,150,50);d.save('Mitarbeiterverpflichtung-'+a.id+'.pdf');}
+  archiveButton.onclick=async()=>{if(!teamAdmin)return;clearArchive();const epoch=agreementListEpoch,id=teamAdmin;const valid=()=>teamAdmin===id&&epoch===agreementListEpoch;archiveStatus.textContent='Wird geladen …';try{const [staff,records]=await Promise.all([client.from('studio_staff').select('user_id,display_name,active'),client.from('staff_agreement_acceptances').select('id,user_id,agreement_version,agreement_text,signed_name,signature_strokes,accepted_at').order('accepted_at',{ascending:false}).limit(1000)]);if(!valid())return;if(staff.error||records.error)throw Error(staff.error?.message||records.error?.message);archiveStatus.textContent=records.data.length+' Verpflichtungen geladen (max. 1000).';for(const m of staff.data){const p=document.createElement('p');p.textContent=m.display_name+' · '+(m.active?'Aktiv':'Inaktiv')+' · '+(records.data.some(a=>a.user_id===m.user_id&&a.agreement_version==='BHW-EVE-2026-11-24-v1')?'Unterschrieben':'Keine aktuelle Unterschrift in der Liste');archiveList.append(p);}for(const a of records.data){const detail=document.createElement('details');const summary=document.createElement('summary');summary.textContent=a.signed_name+' · '+a.agreement_version+' · '+new Date(a.accepted_at).toLocaleString('de-DE');const body=document.createElement('pre');body.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font:inherit';body.textContent=a.agreement_text;const b=document.createElement('button');b.type='button';b.textContent='PDF herunterladen / drucken';b.onclick=async()=>{if(!valid())return;const r=await client.from('staff_agreement_acceptances').select('id,user_id,agreement_version,agreement_text,signed_name,signature_strokes,accepted_at').eq('id',a.id).single();if(!valid())return;if(r.error){archiveStatus.textContent='Export nicht möglich: '+r.error.message;return;}try{exportAgreement(r.data);}catch(e){archiveStatus.textContent='PDF-Fehler: '+e.message;}};detail.append(summary,body,signatureImage(a.signature_strokes),b);archiveList.append(detail);}}catch(e){if(valid())archiveStatus.textContent='Laden fehlgeschlagen: '+e.message;}};
+
+  function clearTeam(){accessEpoch++;accessOutput.replaceChildren();clearArchive();teamAdmin=null;teamVersion++;el('teamArea').hidden=true;el('teamList').replaceChildren();el('teamAdd').reset();el('teamStatus').textContent='';}
+  async function loadTeam(){
+    const id=teamAdmin, version=++teamVersion;if(!id)return;
+    const valid=()=>teamAdmin===id&&teamVersion===version;
+    el('teamStatus').textContent='Team wird geladen …';el('teamList').replaceChildren();
+    const {data,error}=await client.from('studio_staff').select('user_id,display_name,role,active').order('display_name');
+    if(!valid())return;if(error){el('teamStatus').textContent=error.message;return;}
+    el('teamStatus').textContent=data.length+' Mitarbeiter geladen.';
+    for(const member of data){
+      const form=document.createElement('form');form.style.cssText='border:1px solid #555;padding:14px;margin:12px 0;border-radius:10px';
+      const title=document.createElement('strong');title.textContent=member.display_name+' · '+(member.active?'Aktiv':'Inaktiv');form.append(title);
+      if(member.user_id===id){const p=document.createElement('p');p.textContent='Eigenes Konto · '+member.role+' · nicht bearbeitbar';form.append(p);el('teamList').append(form);continue;}
+      const name=document.createElement('input');name.value=member.display_name||'';name.required=true;name.maxLength=120;name.setAttribute('aria-label','Anzeigename');
+      const role=document.createElement('select');role.setAttribute('aria-label','Rolle');for(const [v,t] of [['artist','Tätowierer'],['admin','Administrator']]){const o=document.createElement('option');o.value=v;o.textContent=t;role.append(o);}role.value=member.role;
+      const label=document.createElement('label'),active=document.createElement('input');active.type='checkbox';active.checked=member.active;label.append(active,' Aktiv');
+      const save=document.createElement('button');save.type='submit';save.textContent='Änderungen speichern';form.append(name,role,label,save);el('teamList').append(form);
+      form.onsubmit=async e=>{e.preventDefault();if(!valid()||!name.value.trim()||!role.value)return;if(!confirm('Mitarbeiterrechte wirklich ändern?'))return;save.disabled=true;try{const {data,error}=await client.from('studio_staff').update({display_name:name.value.trim(),role:role.value,active:active.checked}).eq('user_id',member.user_id).select('user_id').single();if(!valid())return;if(error)throw error;await loadTeam();}catch(e){if(valid())el('teamStatus').textContent='Speichern fehlgeschlagen: '+e.message;}finally{save.disabled=false;}};
+    }
+  }
+  el('teamRefresh').onclick=loadTeam;
+  el('teamAdd').onsubmit=async e=>{e.preventDefault();const id=teamAdmin;if(!id)return;const user_id=el('teamId').value.trim(),display_name=el('teamName').value.trim(),role=el('teamRole').value;if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user_id)||!display_name){el('teamStatus').textContent='Bitte gültige Benutzer-ID und Namen eingeben.';return;}if(!confirm('Dieses bestehende Konto als inaktiven Mitarbeiter hinzufügen?'))return;const b=e.target.querySelector('button');b.disabled=true;try{const {error}=await client.from('studio_staff').insert({user_id,display_name,role,active:false});if(teamAdmin!==id)return;if(error)throw error;el('teamAdd').reset();await loadTeam();}catch(e){if(teamAdmin===id)el('teamStatus').textContent='Hinzufügen fehlgeschlagen: '+e.message;}finally{b.disabled=false;}};
+  let staffCheckEpoch=0, agreementSession=null, agreementStrokes=[], agreementPointer=null;
+  const ac=el('agreementCanvas'), ax=ac.getContext('2d');
+  function resetAgreement(){agreementStrokes=[];agreementPointer=null;ax.clearRect(0,0,ac.width,ac.height);el('agreementForm').reset();el('agreementStatus').textContent='';}
+  function agreementPoint(e){const r=ac.getBoundingClientRect();return [Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))];}
+  ac.onpointerdown=e=>{if(agreementPointer!==null)return;agreementPointer=e.pointerId;ac.setPointerCapture(e.pointerId);agreementStrokes.push([agreementPoint(e)]);};
+  ac.onpointermove=e=>{if(agreementPointer!==e.pointerId)return;const a=agreementStrokes.at(-1),p=agreementPoint(e),q=a.at(-1);if(a.length>=5000)return;a.push(p);ax.strokeStyle='#111';ax.lineWidth=3;ax.lineCap='round';ax.beginPath();ax.moveTo(q[0]*ac.width,q[1]*ac.height);ax.lineTo(p[0]*ac.width,p[1]*ac.height);ax.stroke();};
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])ac.addEventListener(event,e=>{if(agreementPointer===e.pointerId)agreementPointer=null;});
+  el('agreementClear').onclick=()=>{agreementStrokes=[];agreementPointer=null;ax.clearRect(0,0,ac.width,ac.height);};
+  el('agreementForm').onsubmit=async e=>{e.preventDefault();const session=agreementSession, epoch=staffCheckEpoch;if(!session)return;const b=el('agreementSubmit');if(b.disabled)return;const status=el('agreementStatus');if(agreementStrokes.flat().length<5){status.textContent='Bitte vollständig unterschreiben.';return;}b.disabled=true;try{const {data,error}=await client.rpc('accept_staff_agreement',{p_signed_name:el('agreementName').value.trim(),p_signature_strokes:agreementStrokes,p_confirmed:el('agreementConfirmed').checked,p_version:'BHW-EVE-2026-11-24-v1'});if(epoch!==staffCheckEpoch)return;if(error||data!==true)throw Error(error?.message||'Speicherung nicht bestätigt');await checkStaff(session);}catch(err){if(epoch===staffCheckEpoch)status.textContent='Speichern fehlgeschlagen: '+err.message;}finally{b.disabled=false;}};
+  async function checkStaff(session){
+    clearCustomers();const epoch=staffCheckEpoch;
+    const {data,error}=await client.from('studio_staff').select('display_name,role,active').eq('user_id',session.user.id).maybeSingle();
+    if(epoch!==staffCheckEpoch)return;
+    if(error||!data?.active){msg('Kein aktiver Mitarbeiterzugang oder Prüfung fehlgeschlagen.');return;}
+    const result=await client.rpc('has_current_staff_agreement');
+    if(epoch!==staffCheckEpoch)return;
+    if(result.error){msg('Verpflichtung konnte nicht geprüft werden. Bitte neu anmelden.');return;}
+    if(result.data!==true){agreementSession=session;el('staffAgreement').hidden=false;el('agreementName').value=data.display_name||'';msg('Bitte zuerst die Mitarbeiterverpflichtung unterschreiben.');return;}
+    msg('Angemeldet als '+data.display_name+' ('+data.role+'). Kundenverwaltung: Testbetrieb. Keine Gesundheitsdaten eingeben.');
+    staffUserId=session.user.id;document.querySelector('main').hidden=false;customerArea.hidden=false;if(data.role==='admin'){teamAdmin=session.user.id;el('teamArea').hidden=false;loadTeam();}await loadCustomers();
+  }
+  let recoveryActive=recoveryHint;
+  const recovery=()=>{clearCustomers();recoveryActive=true;document.body.classList.add('recovery-mode');el('authRecovery').hidden=false;msg('Bitte ein neues Passwort festlegen.')};
+  client.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY' && session){recovery();return}
+    if(recoveryActive)return;
+    el('authSignOut').hidden=!session;
+    if(event==='SIGNED_IN'&&session&&!staffUserId&&!agreementSession){const epoch=staffCheckEpoch;setTimeout(()=>{if(epoch===staffCheckEpoch)checkStaff(session)},0);}
+    if(event==='SIGNED_OUT'){clearCustomers();msg('Abgemeldet.')} 
+  });
+  client.auth.getSession().then(({data,error})=>{
+    if(error){msg('Anmeldung konnte nicht geprüft werden: '+error.message);return}
+    if(recoveryHint){if(data.session){recovery()}else{msg('Der Passwort-Link ist ungültig oder abgelaufen. Bitte einen neuen Link anfordern.')}return}
+    el('authSignOut').hidden=!data.session;
+    if(data.session)checkStaff(data.session);
+  });
+  el('authSignIn').onclick=async()=>{
+    msg('Anmeldung wird geprüft …');
+    const {error}=await client.auth.signInWithPassword({email:el('authEmail').value.trim(),password:el('authPassword').value});
+    if(error)msg('Anmeldung fehlgeschlagen: '+error.message);
+  };
+  el('authResetRequest').onclick=async()=>{
+    const email=el('authEmail').value.trim();if(!email){msg('Bitte zuerst die E-Mail-Adresse eingeben.');return}
+    const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+    msg(error?'Link konnte nicht angefordert werden: '+error.message:'Falls das Konto existiert, wurde eine E-Mail zum Zurücksetzen angefordert.');
+  };
+  el('authSavePassword').onclick=async()=>{
+    const p=el('authNewPassword').value;
+    if(p.length<12){msg('Bitte mindestens 12 Zeichen verwenden.');return}
+    if(p!==el('authNewPassword2').value){msg('Die Passwörter stimmen nicht überein.');return}
+    msg('Passwort wird gespeichert …');
+    const {error}=await client.auth.updateUser({password:p});
+    if(error){msg('Passwort konnte nicht gespeichert werden: '+error.message);return}
+    recoveryActive=false;el('authNewPassword').value='';el('authNewPassword2').value='';
+    document.body.classList.remove('recovery-mode');el('authRecovery').hidden=true;
+    history.replaceState(null,'',location.origin+location.pathname);
+    msg('Passwort gespeichert. Die Anmeldung ist bereit; die Studioverwaltung folgt.');
+  };
+  el('authSignOut').onclick=async()=>{const {error}=await client.auth.signOut();if(error)msg(error.message)};
+})();
+</script></body></html>
